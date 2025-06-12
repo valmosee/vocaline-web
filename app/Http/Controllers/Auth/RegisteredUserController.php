@@ -31,14 +31,30 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'nama' => ['required', 'string', 'max:255'],
+            'nrp'      => 'required|string|max:20|unique:users,nrp',
+            'angkatan' => 'required|string|max:4',
+            'jurusan'  => 'required|string|max:50',
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'jeniskelamin' => 'required|string|max:10',
+            'no_hp'    => 'required|string|max:15',
+            'id_line'  => 'nullable|string|max:50',
+            'role'     => 'required',
+            // 'foto'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Optional photo validation
         ]);
 
         $user = User::create([
             'nama' => $request->nama,
+            'nrp' => $request->nrp,
+            'angkatan' => $request->angkatan,
+            'jurusan' => $request->jurusan,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'jeniskelamin' => $request->jeniskelamin,
+            'no_hp' => $request->no_hp,
+            'id_line' => $request->id_line,
+            'role' => $request->role,
+            // 'foto' => 'default.png'
         ]);
 
         event(new Registered($user));

@@ -44,10 +44,6 @@ Route::get('/eprofile', [EdashboardController::class, 'profile'])->name('eventho
 //     return redirect('/');
 // })->name('logout');
 
-
-Route::get('/regist', [RegisterController::class, 'showForm'])->name('views.register');
-Route::post('/regist', [RegisterController::class, 'submitForm'])->name('views.register.submit');
-
 Route::get('adash', [AdashboardController::class, 'showForm'])->name('admin.dashboard');
 // Route::get('makun', [AdashboardController::class, 'manajemenAkun'])->name('admin.makun');
 
