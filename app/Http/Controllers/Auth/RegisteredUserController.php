@@ -43,12 +43,22 @@ class RegisteredUserController extends Controller
             // 'foto'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Optional photo validation
         ]);
 
+        $item = explode(' ', $request->nama);
+        if ($item[1] == "staff.vg.ac.id") {
+            $role = "admin";
+        } else if ($item[1] == "member.vg.ac.id"){
+            $role = "peserta";
+        }
+        else {
+            $role = "eventholder";
+        }
+
         $user = User::create([
             'nama' => $request->nama,
             'nrp' => $request->nrp,
             'angkatan' => $request->angkatan,
             'jurusan' => $request->jurusan,
-            'email' => $request->email,
+            'email' => $item->email,
             'password' => Hash::make($request->password),
             'jeniskelamin' => $request->jeniskelamin,
             'no_hp' => $request->no_hp,

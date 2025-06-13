@@ -15,11 +15,23 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
+            'nama' => 'Hoard Situman',
+            'nrp' => 'D11230120',
+            'angkatan' => '2023',
+            'jurusan' => 'Bussiness Accounting',
+            'email' => 'hoard@staff.vg.ac.id',
+            'password' => 'hoard123',
+            'jeniskelamin' => 'Laki-laki',
+            'no_hp' => '08154567890',
+            'id_line' => 'hoardS.',
+            'role' => 'admin'
+        ]);
+        User::create([
             'nama' => 'Aurelia',
             'nrp' => 'C14230200',
             'angkatan' => '2023',
             'jurusan' => 'Informatika',
-            'email' => 'aurel.1a@gmail.com',
+            'email' => 'aurel.1a@member.vg.ac.id',
             'password' => 'aurelia123',
             'jeniskelamin' => 'Perempuan',
             'no_hp' => '08123456789',
@@ -31,7 +43,7 @@ class UserSeeder extends Seeder
             'nrp' => 'H11230120',
             'angkatan' => '2023',
             'jurusan' => 'Desain Komiunikasi Visual',
-            'email' => 'bds@gmail.com',
+            'email' => 'bds@member.vg.ac.id',
             'password' => 'budikece123',
             'jeniskelamin' => 'Laki-laki',
             'no_hp' => '08234567890',

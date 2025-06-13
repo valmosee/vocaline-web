@@ -67,7 +67,7 @@
         <!-- Jenis Kelamin -->
         <div class="mt-4">
             <x-input-label for="jeniskelamin" :value="__('Jenis Kelamin')" />
-            <select name="jeniskelamin" id="jeniskelamin" required class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+            <select name="jeniskelamin" id="jeniskelamin" required class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full">
                 <option value="Laki-laki" {{ (old('jeniskelamin', $akun->jeniskelamin ?? '') == 'Laki-laki') ? 'selected' : '' }}>Laki-laki</option>
                 <option value="Perempuan" {{ (old('jeniskelamin', $akun->jeniskelamin ?? '') == 'Perempuan') ? 'selected' : '' }}>Perempuan</option>
             </select>
@@ -77,25 +77,15 @@
         <!-- No HP -->
         <div class="mt-4">
             <x-input-label for="no_hp" :value="__('No HP')" />
-            <input type="text" id="no_hp" name="nrp" required
-                class="w-full px-4 py-3 rounded-md bg-gray-400 text-white text-base outline-none focus:ring-2 focus:ring-gray-600 placeholder-white"
-                placeholder="Masukkan No HP">
+            <x-text-input id="no_hp" name="no_hp" required class="block mt-1 w-full" type="text" :value="old('no_hp')" required autocomplete="no_hp" />
+            <x-input-error :messages="$errors->get('no_hp')" class="mt-2" />
         </div>
 
         <!-- ID Line -->
         <div class="mt-4">
             <x-input-label for="id_line" :value="__('ID Line')" />
-            <input type="text" id="id_line" name="id_line" required
-                class="w-full px-4 py-3 rounded-md bg-gray-400 text-white text-base outline-none focus:ring-2 focus:ring-gray-600 placeholder-white"
-                placeholder="Masukkan ID Line">
-        </div>
-
-        <!-- Jurusan -->
-        <div class="mt-4">
-            <x-input-label for="jurusan" :value="__('Jurusan')" />
-            <input type="text" id="jurusan" name="jurusan" required
-                class="w-full px-4 py-3 rounded-md bg-gray-400 text-white text-base outline-none focus:ring-2 focus:ring-gray-600 placeholder-white"
-                placeholder="Masukkan Jurusan">
+            <x-text-input id="id_line" name="id_line" required class="block mt-1 w-full" type="text" :value="old('id_line')" required autocomplete="id_line" />
+            <x-input-error :messages="$errors->get('id_line')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">

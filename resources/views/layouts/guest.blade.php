@@ -17,7 +17,7 @@
     </head>
     <body class="font-sans text-gray-900 antialiased flex items-center justify-center min-h-screen bg-white">
         <div class="bg-gray-300 p-10 rounded-2xl w-full max-w-sm shadow-lg">
-            <h2 class="text-center font-bold text-2xl mb-8">REGISTER</h2>
+            <h2 class="text-center font-bold text-2xl mb-8"> REGISTER </h2>
 
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
                 {{ $slot }}
