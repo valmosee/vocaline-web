@@ -32,21 +32,21 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @foreach($akuns as $akun)
+                    @foreach($akuns as $akun_item)
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun->nama }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun->nrp }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun->angkatan }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun->jurusan }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun->email }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun->jeniskelamin }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun->no_hp }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun->id_line }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun->role }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun_item->nama }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun_item->nrp }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun_item->angkatan }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun_item->jurusan }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun_item->email }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun_item->jeniskelamin }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun_item->no_hp }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun_item->id_line }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $akun_item->role }}</td>
 
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <a href="{{ route('admin.makun.edit', $akun->id) }}" class="text-blue-600 hover:text-blue-900 mr-2">Edit</a>
-                            <form action="{{ route('admin.makun.destroy', $akun->id) }}" method="POST" class="inline">
+                            <a href="{{ route('admin.makun.edit', $akun_item->id) }}" class="text-blue-600 hover:text-blue-900 mr-2">Edit</a>
+                            <form action="{{ route('admin.makun.destroy', $akun_item->id) }}" method="POST" class="inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Apakah Anda yakin?')">Hapus</button>
@@ -68,188 +68,106 @@
         </div>
     </div>
 
+    ---
+
     <div class="bg-white rounded-lg shadow p-6">
         @if($modul == "update")
             <h2 class="text-xl font-semibold mb-4">Edit Akun</h2>
+            <form action="{{ route('admin.makun.update', $akun->id) }}" method="POST">
+            @method('PUT')
         @else
             <h2 class="text-xl font-semibold mb-4">Tambah Akun</h2>
+            <form action="{{ route('admin.makun.store') }}" method="POST">
         @endif
-        <form action="{{ route('admin.makun.store') }}" method="POST">
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    @if($modul == "update")
-                        <input type="hidden" id="id" name="id" value="{{ $akun->id }}"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    @endif
+                @if($modul == "update")
+                    <input type="hidden" id="id" name="id" value="{{ $akun->id }}">
+                @endif
 
-                    @if($modul == "update")
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="nama">Nama</label>
-                        <input type="text" id="nama" name="nama" value="{{ $akun->nama }}" required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('nama')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @else 
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="nama">Nama</label>
-                        <input type="text" id="nama" name="nama" required 
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('nama')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @endif
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1" for="nama">Nama</label>
+                    <input type="text" id="nama" name="nama" value="{{ old('nama', $modul == 'update' ? $akun->nama : '') }}" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    @error('nama')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div>
-                    @if($modul == "update")
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="nrp">NRP</label>
-                        <input type="text" id="nrp" name="nrp" value="{{ $akun->nrp }}" required 
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('nrp')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @else 
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="nrp">NRP</label>
-                        <input type="text" id="nrp" name="nrp" required 
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('nrp')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @endif
+                    <label class="block text-sm font-medium text-gray-700 mb-1" for="nrp">NRP</label>
+                    <input type="text" id="nrp" name="nrp" value="{{ old('nrp', $modul == 'update' ? $akun->nrp : '') }}" required 
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    @error('nrp')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div>
-                    @if($modul == "update")
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="angkatan">Angkatan</label>
-                        <input type="text" id="angkatan" name="angkatan" value="{{ $akun->angkatan }}" required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('angkatan')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @else
                     <label class="block text-sm font-medium text-gray-700 mb-1" for="angkatan">Angkatan</label>
-                        <input type="text" id="angkatan" name="angkatan" required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('angkatan')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @endif
+                    <input type="text" id="angkatan" name="angkatan" value="{{ old('angkatan', $modul == 'update' ? $akun->angkatan : '') }}" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    @error('angkatan')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div>
-                    @if($modul == "update")
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="jurusan">Jurusan</label>
-                        <input type="text" id="jurusan" name="jurusan" value="{{ $akun->jurusan }}" required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('jurusan')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @else
                     <label class="block text-sm font-medium text-gray-700 mb-1" for="jurusan">Jurusan</label>
-                        <input type="text" id="jurusan" name="jurusan" required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('jurusan')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @endif
+                    <input type="text" id="jurusan" name="jurusan" value="{{ old('jurusan', $modul == 'update' ? $akun->jurusan : '') }}" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    @error('jurusan')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div>
-                    @if($modul == "update")
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="email">Email</label>
-                        <input type="text" id="email" name="email" value="{{ $akun->email }}" required 
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('email')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @else 
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="email">Email</label>
-                        <input type="text" id="email" name="email" required 
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('email')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @endif
+                    <label class="block text-sm font-medium text-gray-700 mb-1" for="email">Email</label>
+                    <input type="text" id="email" name="email" value="{{ old('email', $modul == 'update' ? $akun->email : '') }}" required 
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    @error('email')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div>
-                    @if($modul == "update")
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="jeniskelamin">Jenis Kelamin</label>
-                        <select name="jeniskelamin" id="jeniskelamin" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
-                            <option value="Laki-laki" {{ (old('jeniskelamin', $akun->jeniskelamin ?? '') == 'Laki-laki') ? 'selected' : '' }}>Laki-laki</option>
-                            <option value="Perempuan" {{ (old('jeniskelamin', $akun->jeniskelamin ?? '') == 'Perempuan') ? 'selected' : '' }}>Perempuan</option>
-                        </select>
-                        @error('jeniskelamin')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @else 
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="jeniskelamin">Jenis Kelamin</label>
-                        <select name="jeniskelamin" id="jeniskelamin" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
-                            <option value="Laki-laki" {{ (old('jeniskelamin', $akun->jeniskelamin ?? '') == 'Laki-laki') ? 'selected' : '' }}>Laki-laki</option>
-                            <option value="Perempuan" {{ (old('jeniskelamin', $akun->jeniskelamin ?? '') == 'Perempuan') ? 'selected' : '' }}>Perempuan</option>
-                        </select>
-                        @error('jeniskelamin')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @endif
+                    <label class="block text-sm font-medium text-gray-700 mb-1" for="jeniskelamin">Jenis Kelamin</label>
+                    <select name="jeniskelamin" id="jeniskelamin" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                        <option value="Laki-laki" {{ (old('jeniskelamin', $modul == 'update' ? $akun->jeniskelamin : '') == 'Laki-laki') ? 'selected' : '' }}>Laki-laki</option>
+                        <option value="Perempuan" {{ (old('jeniskelamin', $modul == 'update' ? $akun->jeniskelamin : '') == 'Perempuan') ? 'selected' : '' }}>Perempuan</option>
+                    </select>
+                    @error('jeniskelamin')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div>
-                    @if($modul == "update")
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="no_hp">No. HP</label>
-                        <input type="text" id="no_hp" name="no_hp" value="{{ $akun->no_hp }}" required 
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('no_hp')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @else
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="no_hp">No. HP</label>
-                        <input type="text" id="no_hp" name="no_hp" required 
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('no_hp')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @endif
+                    <label class="block text-sm font-medium text-gray-700 mb-1" for="no_hp">No. HP</label>
+                    <input type="text" id="no_hp" name="no_hp" value="{{ old('no_hp', $modul == 'update' ? $akun->no_hp : '') }}" required 
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    @error('no_hp')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div>
-                    @if($modul == "update")
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="id_line">ID Line</label>
-                        <input type="text" id="id_line" name="id_line" value="{{ $akun->id_line }}" required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('id_line')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @else
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="id_line">ID Line</label>
-                        <input type="text" id="id_line" name="id_line" required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('id_line')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @endif
+                    <label class="block text-sm font-medium text-gray-700 mb-1" for="id_line">ID Line</label>
+                    <input type="text" id="id_line" name="id_line" value="{{ old('id_line', $modul == 'update' ? $akun->id_line : '') }}" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    @error('id_line')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div>
-                    @if($modul == "update")
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="role">Role</label>
-                        <select name="role" id="role" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
-                            <option value="admin" {{ (old('role', $akun->role ?? '') == 'admin') ? 'selected' : '' }}>Admin</option>
-                            <option value="peserta" {{ (old('role', $akun->role ?? '') == 'peserta') ? 'selected' : '' }}>Peserta</option>
-                        </select>
-                        @error('role')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @else
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="role">Role</label>
-                        <select name="role" id="role" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
-                            <option value="admin" {{ (old('role', $akun->role ?? '') == 'admin') ? 'selected' : '' }}>Admin</option>
-                            <option value="peserta" {{ (old('role', $akun->role ?? '') == 'peserta') ? 'selected' : '' }}>Peserta</option>
-                        </select>
-                        @error('role')
-                            <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
-                    @endif
+                    <label class="block text-sm font-medium text-gray-700 mb-1" for="role">Role</label>
+                    <select name="role" id="role" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                        <option value="admin" {{ (old('role', $modul == 'update' ? $akun->role : '') == 'admin') ? 'selected' : '' }}>Admin</option>
+                        <option value="peserta" {{ (old('role', $modul == 'update' ? $akun->role : '') == 'peserta') ? 'selected' : '' }}>Peserta</option>
+                    </select>
+                    @error('role')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="flex items-end">
