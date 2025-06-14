@@ -23,6 +23,7 @@ class User extends Authenticatable
     const ROLE_PESERTA = 'peserta';
     const ROLE_EVENTHOLDER = 'eventholder';
     public $incrementing = true;
+    protected $table= 'users';
     protected $fillable = [
         'nama',        
         'nrp',

@@ -67,4 +67,26 @@ class UserController extends Controller{
         return redirect()->route('admin.makun')
                         ->with('success', 'Akun berhasil dihapus!');
     }
+
+
+    // menampilkan daftar anggota di dashboard admin
+    public function pesertaIndex(Request $request){
+        $search = $request->input('search');
+        
+        $pesertas = User::where('role', 'peserta')
+            ->when($search, function($query) use ($search) {
+                return $query->where(function($q) use ($search) {
+                    $q->where('nama', 'like', '%'.$search.'%')
+                      ->orWhere('nrp', 'like', '%'.$search.'%')
+                      ->orWhere('angkatan', 'like', '%'.$search.'%');
+                });
+            })
+            ->latest()
+            ->paginate(5); // Sesuaikan jumlah item per halaman
+            
+        return view('admin.adashboard', [
+            'pesertas' => $pesertas,
+            'search' => $search
+        ]);
+    }
 }

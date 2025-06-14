@@ -75,8 +75,38 @@ Route::middleware('auth')->group(function () {
         Route::post('/ajukan-event', [EdashboardController::class, 'storeAjuanEvent'])->name('ajukan-event.store');
     });
 
-    // Dashboard untuk Peserta (role default setelah admin/eventholder)
-    Route::middleware('role:peserta')->group(function () {
-        Route::get('/dashboard', [DashboardController::class, 'pesertaDashboard'])->name('dashboard');
-    });
+// Route::post('/logout', function () {
+//     Auth::logout();
+//     return redirect('/');
+// })->name('logout');
+
+Route::get('adash', [AdashboardController::class, 'showForm'])->name('admin.dashboard');
+// Route::get('makun', [AdashboardController::class, 'manajemenAkun'])->name('admin.makun');
+
+// admin
+Route::prefix('admin')->group(function () {
+    Route::get('makun', [UserController::class, 'index'])->name('admin.makun');
+    Route::post('makun', [UserController::class, 'store'])->name('admin.makun.store');
+    Route::get('makun/{akun}/edit', [UserController::class, 'edit'])->name('admin.makun.edit');
+    Route::put('makun/{akun}', [UserController::class, 'update'])->name('admin.makun.update');
+    Route::delete('makun/{akun}', [UserController::class, 'destroy'])->name('admin.makun.destroy');
+    Route::get('/adashboard', [AdashboardController::class, 'index'])->name('admin.adashboard');
 });
+
+Route::get('danggota', [AdashboardController::class, 'dataAnggota'])->name('admin.dataAnggota');
+
+Route::get('event', [EventController::class, 'index'])->name('admin.event');
+Route::post('event', [EventController::class, 'store'])->name('admin.event.store');
+Route::get('event/edit/{id}', [EventController::class, 'edit'])->name('admin.event.edit');
+Route::put('event/{id}', [EventController::class, 'update'])->name('admin.event.update');
+Route::delete('event/{id}', [EventController::class, 'destroy'])->name('admin.event.destroy');
+
+// Peserta
+Route::get('/dashboard', [DashboardController::class, 'showForm'])->name('peserta.dashboard');
+Route::get('/profile', [DashboardController::class, 'profile'])->name('peserta.profile');
+Route::get('/event-peserta', [DashboardController::class, 'event'])->name('peserta.event');
+Route::get('/kuisioner-peserta', [DashboardController::class, 'kuisioner'])->name('peserta.kuisioner');
+
+// Admin
+//Route::get('/adashboard', [AdashboardController::class, 'showForm'])->name('admin.adashboard');
+

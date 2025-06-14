@@ -49,7 +49,7 @@
           <div class="nav-item py-2 px-4 rounded hover:bg-[#BDBDBD] cursor-pointer" data-page="manajemen-akun">Manajemen Akun</div>
         </form> --}}
 
-      <a href="{{ route('admin.dashboard') }}" class="nav-item py-2 px-4 rounded hover:bg-[#BDBDBD] cursor-pointer block">Dashboard</a>
+      <a href="{{ route('admin.adashboard') }}" class="nav-item py-2 px-4 rounded hover:bg-[#BDBDBD] cursor-pointer block">Dashboard</a>
       <a href="{{ route('admin.makun') }}" class="nav-item py-2 px-4 rounded hover:bg-[#BDBDBD] cursor-pointer block">Manajemen Akun</a>
       <a href="{{ route('admin.event') }}" class="nav-item py-2 px-4 rounded hover:bg-[#BDBDBD] cursor-pointer block">Event</a>
 
