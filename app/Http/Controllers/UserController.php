@@ -1,5 +1,5 @@
 <?php
-
+// CONTROLLER UNTUK MENGELOLA AKUN PENGGUNA DI ADMIN
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller{
     public function index(Request $request){
-        $akuns = User::latest()->paginate(10);
+        $akuns = User::latest()->paginate(5);
         $param['modul'] = "insert";
         $param['akuns'] = $akuns; 
         return view('admin.makun', $param);

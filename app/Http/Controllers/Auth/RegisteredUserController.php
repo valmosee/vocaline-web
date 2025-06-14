@@ -30,47 +30,52 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'nama' => ['required', 'string', 'max:255'],
-            'nrp'      => 'required|string|max:20|unique:users,nrp',
-            'angkatan' => 'required|string|max:4',
-            'jurusan'  => 'required|string|max:50',
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'nama'         => ['required', 'string', 'max:255'],
+            'nrp'          => 'required|string|max:20|unique:users,nrp', // Pastikan 'nrp' unik di tabel 'users'
+            'angkatan'     => 'required|string|max:4',
+            'jurusan'      => 'required|string|max:50',
+            'email'        => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password'     => ['required', 'confirmed', Rules\Password::defaults()],
             'jeniskelamin' => 'required|string|max:10',
-            'no_hp'    => 'required|string|max:15',
-            'id_line'  => 'nullable|string|max:50',
-            'role'     => 'required',
-            // 'foto'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Optional photo validation
+            'no_hp'        => 'required|string|max:15',
+            'id_line'      => 'required|string|max:50',
+            // 'foto'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Optional photo validation
         ]);
 
-        $item = explode(' ', $request->nama);
-        if ($item[1] == "staff.vg.ac.id") {
+        $emailParts = explode('@', $request->email); 
+        $domain = $emailParts[1] ?? null;
+
+        $role = "peserta"; 
+        if ($domain === "staff.vg.ac.id") {
             $role = "admin";
-        } else if ($item[1] == "member.vg.ac.id"){
-            $role = "peserta";
-        }
-        else {
+        } elseif ($domain === "event.vg.ac.id") { 
             $role = "eventholder";
         }
 
         $user = User::create([
-            'nama' => $request->nama,
-            'nrp' => $request->nrp,
-            'angkatan' => $request->angkatan,
-            'jurusan' => $request->jurusan,
-            'email' => $item->email,
-            'password' => Hash::make($request->password),
+            'nama'         => $request->nama,
+            'nrp'          => $request->nrp,
+            'angkatan'     => $request->angkatan,
+            'jurusan'      => $request->jurusan,
+            'email'        => $request->email, 
+            'password'     => Hash::make($request->password),
             'jeniskelamin' => $request->jeniskelamin,
-            'no_hp' => $request->no_hp,
-            'id_line' => $request->id_line,
-            'role' => $request->role,
-            // 'foto' => 'default.png'
+            'no_hp'        => $request->no_hp,
+            'id_line'      => $request->id_line,
+            'role'         => $role, 
+            // 'foto' => 'default.png' // Pastikan kolom ini ada di migration dan fillable jika digunakan
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('views.dashboard', absolute: false));
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        } elseif ($user->role === 'eventholder') {
+            return redirect()->route('eventholder.dashboard');
+        } else { // Asumsikan role lain (misal 'peserta') ke dashboard default
+            return redirect()->route('dashboard'); // Route default Breeze
+        }
     }
 }

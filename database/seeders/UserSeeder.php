@@ -27,6 +27,18 @@ class UserSeeder extends Seeder
             'role' => 'admin'
         ]);
         User::create([
+            'nama' => 'Caroline Hartanto',
+            'nrp' => 'H11240112',
+            'angkatan' => '2024',
+            'jurusan' => 'Strategic Comunications',
+            'email' => 'carl@event.vg.ac.id',
+            'password' => '12345678',
+            'jeniskelamin' => 'Perempuan',
+            'no_hp' => '081234568212',
+            'id_line' => 'carl.12',
+            'role' => 'peserta'
+        ]);
+        User::create([
             'nama' => 'Aurelia',
             'nrp' => 'C14230200',
             'angkatan' => '2023',

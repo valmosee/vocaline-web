@@ -23,7 +23,8 @@ return new class extends Migration
             $table->string('jeniskelamin'); 
             $table->string('no_hp');
             $table->string('id_line');
-            $table->enum('role', ['admin', 'peserta'])->default('peserta');
+            $table->enum('role', ['admin', 'peserta', 'eventholder'])->default('peserta');
+            // $table->string('foto')->nullable(); // Uncomment if you want to store user photos
             $table->rememberToken();
             $table->timestamps();
         });

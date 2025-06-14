@@ -21,6 +21,7 @@ class User extends Authenticatable
      */
     const ROLE_ADMIN = 'admin';
     const ROLE_PESERTA = 'peserta';
+    const ROLE_EVENTHOLDER = 'eventholder';
     public $incrementing = true;
     protected $fillable = [
         'nama',        
@@ -33,6 +34,7 @@ class User extends Authenticatable
         'no_hp',
         'id_line',
         'role',
+        // 'foto', // Uncomment if you want to store user photos
     ];
 
     /**
