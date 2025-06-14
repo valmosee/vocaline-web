@@ -47,12 +47,14 @@ Route::get('/eprofile', [EdashboardController::class, 'profile'])->name('eventho
 Route::get('adash', [AdashboardController::class, 'showForm'])->name('admin.dashboard');
 // Route::get('makun', [AdashboardController::class, 'manajemenAkun'])->name('admin.makun');
 
+// admin
 Route::prefix('admin')->group(function () {
     Route::get('makun', [UserController::class, 'index'])->name('admin.makun');
     Route::post('makun', [UserController::class, 'store'])->name('admin.makun.store');
     Route::get('makun/{akun}/edit', [UserController::class, 'edit'])->name('admin.makun.edit');
     Route::put('makun/{akun}', [UserController::class, 'update'])->name('admin.makun.update');
     Route::delete('makun/{akun}', [UserController::class, 'destroy'])->name('admin.makun.destroy');
+    Route::get('/adashboard', [AdashboardController::class, 'index'])->name('admin.adashboard');
 });
 
 Route::get('danggota', [AdashboardController::class, 'dataAnggota'])->name('admin.dataAnggota');
@@ -70,60 +72,5 @@ Route::get('/event-peserta', [DashboardController::class, 'event'])->name('peser
 Route::get('/kuisioner-peserta', [DashboardController::class, 'kuisioner'])->name('peserta.kuisioner');
 
 // Admin
-Route::get('/adashboard', [AdashboardController::class, 'showForm'])->name('admin.adashboard');
+//Route::get('/adashboard', [AdashboardController::class, 'showForm'])->name('admin.adashboard');
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->name('views.dashboard');
-
-// Route::get('/profile', function () {
-//     return view('peserta.profile');
-// })->name('peserta.profile');
-
-// Route::get('/aprofile', function () {
-//     return view('admin.aprofile');
-// })->name('admin.aprofile');
-
-
-
-// Route::get('/dashboard', function () {
-//     return view('peserta.dashboard');
-// })->name('peserta.dashboard');
-
-
-
-// Route::post('diem', function (Request $request) {
-//     $credentials = $request->only('email', 'password');
-
-//     if (Auth::attempt($credentials)) {
-//         $request->session()->regenerate(); // Penting untuk keamanan
-
-//         $user = Auth::user();
-//         if ($user->role === 'admin') {
-//             return redirect()->route('admin.adashboard');
-//         } elseif ($user->role === 'peserta') {
-//             return redirect()->route('peserta.welcome');
-//         }
-//         return redirect()->route('views.dashboard'); // Fallback
-//     }
-
-//     return back()->withErrors(['email' => 'Email atau password salah']);
-// })->name('views.log');
-
-
-// Route::post('/register-submit', function (Request $request) {
-//     // proses register di sini
-//     return redirect()->route('views.dashboard');
-// })->name('views.register.submit');
-
-
-
-// Route::post('/register-submit', function (Request $request) {
-//     User::create([
-//         'name' => $request->nama,
-//         'email' => $request->email,
-//         'password' => bcrypt($request->password),
-//     ]);
-
-//     return redirect()->route('views.dashboard');
-// })->name('views.register.submit');

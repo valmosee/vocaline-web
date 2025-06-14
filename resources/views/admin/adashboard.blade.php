@@ -26,33 +26,37 @@
         <div class="grid grid-cols-2 gap-6">
             <!-- Data Anggota -->
             <div class="bg-white rounded-lg border border-gray-300 shadow overflow-hidden">
-            <div class="px-4 py-3 font-semibold border-b border-gray-200 text-sm">Data Anggota</div>
-            <table class="w-full text-xs border-collapse">
+              <div class="px-4 py-3 font-semibold border-b border-gray-200 text-sm flex justify-between items-center">
+                <span>Data Anggota Terbaru</span>
+                <a href="{{ route('admin.makun') }}" class="text-blue-500 text-xs hover:underline">Lihat Semua</a>
+              </div>
+              <table class="w-full text-xs border-collapse">
                 <thead>
-                <tr class="bg-gray-200 text-left">
+                  <tr class="bg-gray-200 text-left">
                     <th class="px-3 py-2">Nama</th>
-                    <th class="px-3 py-2">Angkatan</th>
                     <th class="px-3 py-2">NRP</th>
-                </tr>
+                    <th class="px-3 py-2">Angkatan</th>
+                  </tr>
                 </thead>
                 <tbody>
-                <tr><td class="px-3 py-2">Lana Del Rey</td><td>2023</td><td>B11230123</td></tr>
-                <tr><td class="px-3 py-2">Sabrina C</td><td>2022</td><td>D11220024</td></tr>
-                <tr><td class="px-3 py-2">Olivia Rodrigo</td><td>2022</td><td>D11220011</td></tr>
+                  @isset($pesertas)
+                  @forelse($pesertas as $peserta)
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-3 py-2">{{ $peserta->nama }}</td>
+                    <td class="px-3 py-2">{{ $peserta->nrp }}</td>
+                    <td class="px-3 py-2">{{ $peserta->angkatan }}</td>
+                  </tr>
+                  @empty
+                  <tr>
+                    <td colspan="3" class="px-3 py-2 text-center text-gray-500">Tidak ada data</td>
+                  </tr>
+                  @endforelse
+                  @endisset
                 </tbody>
-            </table>
+              </table>
             </div>
-
-            <!-- Grafik Peringkatan -->
-            <div class="bg-white rounded-lg border border-gray-300 shadow p-4 min-h-[200px]">
-              <div class="font-semibold text-sm mb-2">Grafik Peringkatan</div>
-              <div class="space-y-2 text-xs">
-                  <div><b>Safari</b><br>Halo, keren banget. Bener-bener mengisi acara ini. Semangat terus ya!</div>
-                  <div><b>JawaPos Healthy Lifestyle</b><br>Thankyou sudah mengisi acara kami! Sukses terus VG🥰</div>
-                  <div><b>SPARK</b><br>Aransemen yang asik!!</div>
-              </div>
-            </div>
-
+            
+           
             <!-- Pengumuman -->
             <div class="bg-white rounded-lg border border-gray-300 shadow p-4 min-h-[200px]">
               <div class="font-semibold text-sm mb-2">Pengumuman Terbaru</div>
