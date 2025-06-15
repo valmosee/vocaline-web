@@ -2,25 +2,24 @@
 
 @section('content')
 <section>
-    <!-- Main Content -->
     <main class="flex-1 p-8 space-y-6 bg-gray-100 overflow-y-auto">
 
       <!-- Dashboard Page -->
       <div id="dashboard" class="page-content">
         <h1 class="text-2xl font-bold">DASHBOARD ADMIN</h1>
 
-        <!-- Summary Cards -->
+        <!-- Summary Cards with Profile Photo -->
         <div class="flex gap-6">
             <div class="bg-white w-[130px] h-[90px] rounded-lg border border-gray-300 shadow flex flex-col items-center justify-center">
-            <div class="text-2xl font-bold">34</div>
-            <div class="text-xs text-gray-500">Anggota</div>
+
+                <div class="text-2xl font-bold">{{ $anggotaCount ?? 34 }}</div>
+                <div class="text-xs text-gray-500">Anggota</div>
             </div>
             <div class="bg-white w-[130px] h-[90px] rounded-lg border border-gray-300 shadow flex flex-col items-center justify-center">
-            <div class="text-2xl font-bold">12</div>
-            <div class="text-xs text-gray-500">Event Terlaksana</div>
+                <div class="text-2xl font-bold">{{ $eventCount ?? 12 }}</div>
+                <div class="text-xs text-gray-500">Event Terlaksana</div>
             </div>
         </div>
-            <div class="bg-white rounded-lg border border-gray-300 shadow p-4 min-h-[200px]">
 
         <!-- Grid Section -->
         <div class="grid grid-cols-2 gap-6">
@@ -56,7 +55,6 @@
               </table>
             </div>
             
-           
             <!-- Pengumuman -->
             <div class="bg-white rounded-lg border border-gray-300 shadow p-4 min-h-[200px]">
               <div class="font-semibold text-sm mb-2">Pengumuman Terbaru</div>
@@ -221,7 +219,6 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Event Card 1 -->
           <div class="bg-white rounded-lg border border-gray-300 shadow p-4">
             <div class="flex justify-between items-start mb-3">
               <h3 class="font-semibold">Dies Natalis ITS</h3>
@@ -242,7 +239,6 @@
             </div>
           </div>
 
-          <!-- Event Card 2 -->
           <div class="bg-white rounded-lg border border-gray-300 shadow p-4">
             <div class="flex justify-between items-start mb-3">
               <h3 class="font-semibold">Phygital</h3>
@@ -449,7 +445,26 @@
           <table class="w-full text-sm">
             <thead>
               <tr class="bg-gray-200 text-left">
-                <th class="px-4
+                <th class="px-4 py-3">Judul</th>
+                <th class="px-4 py-3">Tanggal</th>
+                <th class="px-4 py-3">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="px-4 py-3">Laporan Kinerja Bulan Mei</td>
+                <td class="px-4 py-3">15-06-2025</td>
+                <td class="px-4 py-3">
+                  <button class="text-green-500 hover:text-green-700 mr-2" onclick="downloadReport('kinerja-mei')">
+                    <i class="fa-solid fa-download"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-  </section>
-  @endsection
+    </main>
+</section>
+@endsection

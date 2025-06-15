@@ -1,48 +1,98 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profil</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profil Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="flex min-h-screen">
+<body class="bg-black text-white min-h-screen flex items-center justify-center p-6">
 
-  <!-- Kiri -->
-  <div class="w-1/2 bg-gray-300 flex flex-col items-center justify-center p-8">
-    <div class="w-12 h-12 bg-orange-400 rounded-full flex items-center justify-center text-white font-bold mb-4">
-      BS
-    </div>
-
-    <!-- Tombol Back -->
-    <a href="{{ route('admin.adashboard') }}" class="absolute top-4 left-4 bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 font-bold rounded">
-      ← Back
+    <a href="{{ route('admin.dashboard') }}" class="absolute top-6 left-6 bg-yellow-700 hover:bg-yellow-800 text-white py-2 px-4 font-bold rounded">
+        ← Back
     </a>
 
-    <h2 class="text-lg font-semibold mb-8">Vocal Group</h2>
-    <form class="space-y-4 w-full max-w-xs">
-      <input type="text" placeholder="NAME" class="w-full px-4 py-2 rounded bg-gray-400 placeholder-black text-black focus:outline-none">
-      <input type="email" placeholder="EMAIL" class="w-full px-4 py-2 rounded bg-gray-400 placeholder-black text-black focus:outline-none">
-      <input type="text" placeholder="ROLE" class="w-full px-4 py-2 rounded bg-gray-400 placeholder-black text-black focus:outline-none">
-      <button type="submit" class="w-full bg-gray-600 hover:bg-gray-700 text-white py-2 font-bold rounded">
-        SIMPAN
-      </button>
-    </form>
-  </div>
+    <div class="w-full max-w-md relative mt-12">
+        <div class="bg-gray-800 rounded-lg p-6 space-y-6 shadow-xl">
 
-  <!-- Kanan -->
-  <div class="w-1/2 bg-white flex flex-col items-center justify-center p-8">
-    <h2 class="text-lg font-semibold mb-4">Vocal Group</h2>
-    <p class="mb-4 font-bold hover:underline cursor-pointer">Unggah Foto</p>
+            <!-- Header Profil -->
+            <div class="flex items-center space-x-4">
+                <img id="previewImage" src="{{ $user->foto ?? 'https://via.placeholder.com/60' }}?t={{ time() }}" 
+                     alt="Foto Profil" 
+                     class="w-16 h-16 rounded-full object-cover border-2 border-yellow-600">
+                <div>
+                    <p class="font-semibold text-lg">{{ $user->nama }}</p>
+                    <p class="text-gray-400 text-sm">{{ $user->email }}</p>
+                </div>
+            </div>
 
-    <div class="w-40 h-40 border-2 border-dashed border-gray-400 rounded-xl flex items-center justify-center mb-4">
-      <img src="https://drive.google.com/file/d/1UbLxCL7s060_HNNXNK3QRiQaBdjy3YFP/view?usp=drive_link">
+            <!-- Form Edit Profil -->
+            <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="space-y-4">
+                @csrf
+                @method('PATCH')
+
+                <div>
+                    <label class="block mb-1 text-gray-300">Nama</label>
+                    <input name="nama" type="text" value="{{ old('nama', $user->nama) }}"
+                           class="w-full bg-gray-700 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 placeholder-gray-400">
+                </div>
+
+                <div>
+                    <label class="block mb-1 text-gray-300">Email</label>
+                    <input name="email" type="email" value="{{ old('email', $user->email) }}"
+                           class="w-full bg-gray-700 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 placeholder-gray-400">
+                </div>
+
+                <div>
+                    <label class="block mb-1 text-gray-300">Password (Opsional)</label>
+                    <input name="password" type="password"
+                           class="w-full bg-gray-700 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 placeholder-gray-400">
+                </div>
+
+                <div>
+                    <label class="block mb-1 text-gray-300">Foto Profil</label>
+                    <input id="profile_photo" name="profile_photo" type="file" accept="image/*"
+                           class="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-yellow-700 file:text-white hover:file:bg-yellow-800">
+                    <span class="text-gray-500 text-xs mt-1" id="fileInfo">No file chosen</span>
+                </div>
+
+                <div>
+                    <button type="submit" class="bg-yellow-700 hover:bg-yellow-800 w-full py-2 rounded font-semibold transition">
+                        Simpan Perubahan
+                    </button>
+                </div>
+            </form>
+
+            @if (session('status'))
+                <div class="text-green-500 text-sm mt-4">{{ session('status') }}</div>
+            @endif
+
+            @if (session('error'))
+                <div class="text-red-500 text-sm mt-4">{{ session('error') }}</div>
+            @endif
+
+        </div>
     </div>
 
-    <button class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 font-bold rounded">
-      SIMPAN PERUBAHAN
-    </button>
-  </div>
+    <script>
+        const input = document.getElementById('profile_photo');
+        const preview = document.getElementById('previewImage');
+        const fileInfo = document.getElementById('fileInfo');
+
+        input.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    preview.src = event.target.result;
+                }
+                reader.readAsDataURL(file);
+                fileInfo.textContent = file.name;
+            } else {
+                fileInfo.textContent = 'No file chosen';
+            }
+        });
+    </script>
 
 </body>
 </html>
