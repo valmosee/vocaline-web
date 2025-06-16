@@ -42,8 +42,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/makun/{akun}/edit', [UserController::class, 'edit'])->name('makun.edit');
         Route::put('/makun/{akun}', [UserController::class, 'update'])->name('makun.update');
         Route::delete('/makun/{akun}', [UserController::class, 'destroy'])->name('makun.destroy');
-        Route::get('/adashboard', [AdashboardController::class, 'index'])->name('adashboard');
+
+        Route::get('/adashboard', [AdashboardController::class, 'showForm'])->name('adashboard');
+        Route::get('/event', [AdashboardController::class, 'event'])->name('event');
     });
+
 
     Route::get('/danggota', [AdashboardController::class, 'dataAnggota'])->name('admin.dataAnggota');
 

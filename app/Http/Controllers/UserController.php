@@ -14,44 +14,44 @@ class UserController extends Controller{
         return view('admin.makun', $param);
     }
 
-    public function store(Request $request){
-        if ($request->btninsert) {
-            $validated = $request->validate([
-                'nama'     => 'required|string|max:255',
-                'nrp'      => 'required|string|max:20|unique:users,nrp',
-                'angkatan' => 'required|string|max:4',
-                'jurusan'  => 'required|string|max:50',
-                'email'    => 'required|string|email|max:255',
-                'jeniskelamin' => 'required|string|max:10',
-                'no_hp'    => 'required|string|max:15',
-                'id_line'  => 'nullable|string|max:50',
-                'role'     => 'required',
-            ]);
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'nama'     => 'required|string|max:255',
+            'nrp'      => 'required|string|max:20|unique:users,nrp',
+            'angkatan' => 'required|string|max:4',
+            'jurusan'  => 'required|string|max:50',
+            'email'    => 'required|string|email|max:255|unique:users,email',
+            'jeniskelamin' => 'required|string|max:10',
+            'no_hp'    => 'required|string|max:15',
+            'id_line'  => 'nullable|string|max:50',
+            'role'     => 'required|in:admin,peserta',
+        ]);
 
-            $validated['password'] = Hash::make('12345678');
-            User::create($validated);
+        $validated['password'] = Hash::make('12345678');
+        User::create($validated);
 
-            return redirect()->route('admin.makun')
-                ->with('success', 'Akun berhasil ditambahkan!');
-        } else {
-            $validated = $request->validate([
-                'id'     => 'required',
-                'nama'     => 'required|string|max:255',
-                'nrp'      => 'required|string|max:20',
-                'angkatan' => 'required|string|max:4',
-                'jurusan'  => 'required|string|max:50',
-                'email'    => 'required|string|email|max:255|unique:users,email,'.$request->id,
-                'jeniskelamin' => 'required|string|max:10',
-                'no_hp'    => 'required|string|max:15',
-                'id_line'  => 'nullable|string|max:50',
-                'role'     => 'required|in:admin,peserta',
-            ]);
-
-            $baru = User::findOrFail($request->id);
-            $baru->update($validated); // tidak ubah password
-            return redirect()->route('admin.makun')->with('success', 'Akun berhasil Diupdate!');
-        }
+        return redirect()->route('admin.makun')->with('success', 'Akun berhasil ditambahkan!');
     }
+
+    public function update(Request $request, User $akun)
+    {
+        $validated = $request->validate([
+            'nama'     => 'required|string|max:255',
+            'nrp'      => 'required|string|max:20',
+            'angkatan' => 'required|string|max:4',
+            'jurusan'  => 'required|string|max:50',
+            'email'    => 'required|string|email|max:255|unique:users,email,'.$akun->id,
+            'jeniskelamin' => 'required|string|max:10',
+            'no_hp'    => 'required|string|max:15',
+            'id_line'  => 'nullable|string|max:50',
+            'role'     => 'required|in:admin,peserta',
+        ]);
+
+        $akun->update($validated);
+        return redirect()->route('admin.makun')->with('success', 'Akun berhasil diperbarui!');
+    }
+
 
     public function edit(User $akun){
         $akuns = User::latest()->paginate(10);
@@ -68,7 +68,6 @@ class UserController extends Controller{
                         ->with('success', 'Akun berhasil dihapus!');
     }
 
-
     // menampilkan daftar anggota di dashboard admin
     public function pesertaIndex(Request $request){
         $search = $request->input('search');
@@ -77,8 +76,8 @@ class UserController extends Controller{
             ->when($search, function($query) use ($search) {
                 return $query->where(function($q) use ($search) {
                     $q->where('nama', 'like', '%'.$search.'%')
-                      ->orWhere('nrp', 'like', '%'.$search.'%')
-                      ->orWhere('angkatan', 'like', '%'.$search.'%');
+                    ->orWhere('nrp', 'like', '%'.$search.'%')
+                    ->orWhere('angkatan', 'like', '%'.$search.'%');
                 });
             })
             ->latest()

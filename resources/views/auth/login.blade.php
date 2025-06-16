@@ -65,8 +65,15 @@
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
-
     </form>
+        <div class="mt-4">
+            <p class="text-xs mt-2 text-gray-700">
+                <strong>Keterangan pengisian username:</strong><br>
+                - Fungsionaris: gunakan email @staff.vg.ac.id<br>
+                - Peserta: gunakan email @member.vg.ac.id<br>
+                - Eventholder: gunakan email @event.vg.ac.id
+            </p>
+        </div>
 </x-guest-layout>
 
 <script language="javascript">
