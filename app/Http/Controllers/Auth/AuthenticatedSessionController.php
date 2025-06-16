@@ -12,7 +12,7 @@ use Illuminate\View\View;
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view.
+     * Menampilkan halaman login.
      */
     public function create(): View
     {
@@ -20,25 +20,32 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Handle an incoming authentication request.
+     * Menangani request login.
      */
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
 
         $request->session()->regenerate();
-        
-        if( Auth::user()->role === 'admin') {
-            return redirect()->intended(route('admin.adashboard', absolute: false));
-        } elseif (Auth::user()->role === 'peserta') {
-            return redirect()->intended(route('peserta.dashboard', absolute: false));
-        } elseif (Auth::user()->role === 'eventholder') {
-            return redirect()->intended(route('eventholder.edash', absolute: false));
+
+        $user = Auth::user();
+
+        // Cek role dan arahkan sesuai dashboard-nya
+        if ($user->role === 'admin') {
+            return redirect()->intended(route('admin.adashboard'));
+        } elseif ($user->role === 'eventholder') {
+            return redirect()->intended(route('eventholder.dashboard'));
+        } elseif ($user->role === 'peserta') {
+            return redirect()->intended(route('peserta.dashboard'));
         }
+
+        // Jika role tidak dikenali
+        Auth::logout();
+        return redirect('/login')->withErrors(['email' => 'Akun tidak memiliki role yang valid.']);
     }
 
     /**
-     * Destroy an authenticated session.
+     * Logout dan hapus session.
      */
     public function destroy(Request $request): RedirectResponse
     {

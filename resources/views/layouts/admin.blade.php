@@ -32,7 +32,7 @@
   <div class="flex h-screen overflow-hidden">
     <!-- Sidebar -->
     <aside class="w-[220px] bg-[#D9D9D9] p-5 flex flex-col items-start">
-    <a href="{{ route('peserta.profile') }}" class="flex items-center mb-6">
+    <a href="{{ route('admin.aprofile') }}" class="flex items-center mb-6">
       <div class="bg-[#F7931E] text-white font-bold w-10 h-10 rounded-full flex items-center justify-center mr-3 hover:opacity-80 transition">
         VG
       </div>

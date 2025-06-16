@@ -20,8 +20,9 @@ class DashboardController extends Controller
         return view('peserta.kuisioner');
     }
 
-    public function profile()
-    {
-        return view('peserta.profile');
-    }
+    public function profile(Request $request)
+{
+    $user = $request->user(); // ambil user yang login
+    return view('peserta.profile', compact('user')); // kirim ke view
+}
 }

@@ -8,7 +8,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 
-
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -23,9 +22,9 @@ class User extends Authenticatable
     const ROLE_PESERTA = 'peserta';
     const ROLE_EVENTHOLDER = 'eventholder';
     public $incrementing = true;
-    protected $table= 'users';
+    protected $table = 'users';
     protected $fillable = [
-        'nama',        
+        'nama',
         'nrp',
         'angkatan',
         'jurusan',
@@ -35,7 +34,7 @@ class User extends Authenticatable
         'no_hp',
         'id_line',
         'role',
-        // 'foto', // Uncomment if you want to store user photos
+        'foto', // Pastikan ini tidak dikomentari
     ];
 
     /**
