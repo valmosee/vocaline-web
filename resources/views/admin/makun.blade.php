@@ -100,7 +100,7 @@
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1" for="nrp">NRP</label>
-                    <input type="text" id="nrp" name="nrp" value="{{ old('nrp', $modul == 'update' ? $akun->nrp : '') }}" required 
+                    <input type="text" id="nrp" name="nrp" value="{{ old('nrp', $modul == 'update' ? $akun->nrp : '') }}"  
                     class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     @error('nrp')
                         <span class="text-red-500 text-sm">{{ $message }}</span>

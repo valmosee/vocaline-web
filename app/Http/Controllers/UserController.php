@@ -18,7 +18,7 @@ class UserController extends Controller{
     {
         $validated = $request->validate([
             'nama'     => 'required|string|max:255',
-            'nrp'      => 'required|string|max:20|unique:users,nrp',
+            'nrp'      => 'string|max:20|unique:users,nrp',
             'angkatan' => 'required|string|max:4',
             'jurusan'  => 'required|string|max:50',
             'email'    => 'required|string|email|max:255|unique:users,email',
@@ -38,7 +38,7 @@ class UserController extends Controller{
     {
         $validated = $request->validate([
             'nama'     => 'required|string|max:255',
-            'nrp'      => 'required|string|max:20',
+            'nrp'      => 'string|max:20',
             'angkatan' => 'required|string|max:4',
             'jurusan'  => 'required|string|max:50',
             'email'    => 'required|string|email|max:255|unique:users,email,'.$akun->id,
