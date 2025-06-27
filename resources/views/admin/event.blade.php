@@ -21,14 +21,10 @@
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lokasi</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Alamat</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kota</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jam Mulai</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jam Selesai</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact Person</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Penyanyi</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Keterangan</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+
 
                 </tr>
             </thead>
@@ -39,7 +35,6 @@
                     <td class="px-6 py-4 whitespace-nowrap">{{ \Carbon\Carbon::parse($event->date)->format('d/m/Y') }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $event->location }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $event->address }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ $event->city }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $event->jam_mulai }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 py-1 text-xs rounded-full
@@ -50,6 +45,7 @@
                         </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
+                        @if($event->status !== 'dibatalkan')
                         <a href="{{ route('admin.event.edit', $event->id) }}" class="text-blue-600 hover:text-blue-900 mr-3">
                             <i class="fas fa-edit"></i> Edit
                         </a>
@@ -60,6 +56,13 @@
                                 <i class="fas fa-trash"></i> Hapus
                             </button>
                         </form>
+                        <a> </a>
+                        <a href="{{ route('admin.kuesioner', $event->id) }}" class="text-yellow-600 hover:text-yellow-900 mr-3">
+                            <i class="fas fa-question"></i> Kuesioner
+                        </a>
+                        @else
+                        <span class="text-gray-400 italic">Tidak tersedia</span>
+                        @endif
                     </td>
                 </tr>
                 @empty
@@ -88,56 +91,89 @@
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama Event*</label>
                     <input type="text" id="name" name="name" required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        @error('name')
+                        <div class="alert alert-danger">{{ $message }} </div>
+                        @enderror
                 </div>
                 <div>
-                    <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal*</label>
+                    <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Event*</label>
                     <input type="date" id="date" name="date" required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        @error('date')
+                        <div class="alert alert-danger">{{ $message }} </div>
+                        @enderror
                 </div>
                 <div>
                     <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Lokasi*</label>
                     <input type="text" id="location" name="location" required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        @error('location')
+                        <div class="alert alert-danger">{{ $message }} </div>
+                        @enderror
                 </div>
                 <div>
                     <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat*</label>
                     <input type="text" id="alamat" name="address" required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        @error('address')
+                        <div class="alert alert-danger">{{ $message }} </div>
+                        @enderror
                 </div>
                 <div>
                     <label for="kota" class="block text-sm font-medium text-gray-700 mb-1">Kota</label>
                     <input type="text" id="kota" name="city" required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        @error('city')
+                        <div class="alert alert-danger">{{ $message }} </div>
+                        @enderror
                 </div>
                 <div>
                     <label for="jam_mulai" class="block text-sm font-medium text-gray-700 mb-1">Jam Mulai</label>
                     <input type="time" id="jam_mulai" name="jam_mulai" required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        @error('jam_mulai')
+                        <div class="alert alert-danger">{{ $message }} </div>
+                        @enderror
                 </div>
                 <div>
                     <label for="jam_selesai" class="block text-sm font-medium text-gray-700 mb-1">Jam Selesai</label>
                     <input type="time" id="jam_selesai" name="jam_selesai" required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        @error('jam_selesai')
+                        <div class="alert alert-danger">{{ $message }} </div>
+                        @enderror
                 </div>
                 <div>
                     <label for="contact_person" class="block text-sm font-medium text-gray-700 mb-1">Contact Person</label>
                     <input type="text" id="cp" name="contact_person" required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        @error('contact_person')
+                        <div class="alert alert-danger">{{ $message }} </div>
+                        @enderror
                 </div>
                 <div>
                     <label for="image" class="block text-sm font-medium text-gray-700 mb-1">Image</label>
                     <input type="file" id="image" name="image" accept="image/*" required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        @error('image')
+                        <div class="alert alert-danger">{{ $message }} </div>
+                        @enderror
                 </div>
                 <div>
                     <label for="total_penyanyi" class="block text-sm font-medium text-gray-700 mb-1">Total Penyanyi</label>
                     <input type="integer" id="total_penyanyi" name="total_penyanyi" required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        @error('total_penyanyi')
+                        <div class="alert alert-danger">{{ $message }} </div>
+                        @enderror
                 </div>
                 <div>
                     <label for="keterangan" class="block text-sm font-medium text-gray-700 mb-1">Keterangan</label>
                     <input type="text" id="keterangan" name="keterangan" required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        @error('keterangan')
+                        <div class="alert alert-danger">{{ $message }} </div>
+                        @enderror
                 </div>
                 <div>
                     <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status*</label>
@@ -147,6 +183,9 @@
                         <option value="selesai">Selesai</option>
                         <option value="dibatalkan">Dibatalkan</option>
                     </select>
+                    @error('keterangan')
+                        <div class="alert alert-danger">{{ $message }} </div>
+                        @enderror
                 </div>
             </div>
             <div class="mt-6">
