@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\KuesionerController;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
@@ -21,4 +22,9 @@ class Event extends Model
         'keterangan',
         'status'
     ];
+
+    public function kuesioner() {
+    return $this->hasMany(Kuesioner::class, 'id_event');
+
+}
 }
