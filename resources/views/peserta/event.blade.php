@@ -1,47 +1,33 @@
 @extends('layout.peserta')
 
 @section('content')
+    <!-- Main Content -->
+    <main class="flex-1 p-10">
+        <!-- Card Event -->
+        <div class="bg-gray-200 rounded-xl shadow-xl ring-1 ring-black roun  min-h-screen py-12 px-6">
+            <h2 class="text-center text-yellow-400 text-4xl font-bold mb-10">Events</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                @foreach ($events as $row)
+                    <div class="bg-[#1c1c3c] rounded-xl overflow-hidden shadow-lg">
+                        <img src="{{ asset('storage/' . $row->image) }}" alt="{{ $row->name }}"
+                            class="w-full h-48 object-cover">
 
-  <!-- Main Content -->
-  <main class="flex-1 p-10">
-    <h2 class="text-2xl font-bold mb-6">DAFTAR EVENT (PESERTA)</h2>
+                        <div class="p-4">
+                            <h3 class="text-yellow-400 text-xl font-bold mb-1">{{ $row->name }}</h3>
+                            <div class="flex justify-between items-center">
+                            <p class="text-white text-sm">{{ $row->location }}</p>
+                            <a href="{{ route('peserta.detailevent', ['id' => $row->id]) }}"
+                            class="bg-yellow-400 text-black text-xs font-semibold px-3 py-1 rounded hover:bg-yellow-500 transition">
+                                Lihat Detail
+                            </a>
+                            </div>
 
-    <!-- Tabel Event -->
-    <div class="bg-gray-100 p-4 rounded-md mb-10">
-      <table class="w-full text-sm">
-        <thead>
-          <tr class="text-gray-700">
-            <th class="text-left py-2 px-3">Nama Event</th>
-            <th class="text-left py-2 px-3">Tanggal</th>
-            <th class="text-left py-2 px-3">Lokasi</th>
-            <th class="text-left py-2 px-3">Benefit</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Kosong, belum ada event -->
-          <tr>
-            <td class="py-4 px-3 text-gray-400" colspan="4">Tidak ada event tersedia.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </main>
 
-    <!-- Form Pengajuan -->
-    <div class="max-w-md mx-auto bg-gray-100 p-6 rounded-md shadow-md">
-      <h3 class="text-center italic text-sm mb-4 font-semibold">Pengajuan Partisipasi</h3>
-      <div class="grid grid-cols-3 gap-2 text-xs mb-2 font-bold">
-        <span>Nama</span>
-        <span>NRP</span>
-        <span>Acara</span>
-      </div>
-      <div class="grid grid-cols-3 gap-2 mb-4">
-        <input type="text" placeholder="Type your name..." class="p-2 border rounded text-sm">
-        <input type="text" placeholder="Type your NRP..." class="p-2 border rounded text-sm">
-        <input type="text" value="Phygital" readonly class="p-2 border rounded bg-gray-200 text-sm">
-      </div>
-      <button class="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-700 transition">Ajukan Partisipasi</button>
-    </div>
-  </main>
-
-</section>
+    </section>
 @endsection
