@@ -49,7 +49,17 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/danggota', [AdashboardController::class, 'dataAnggota'])->name('admin.dataAnggota');
+    // === EVENT ===
+    Route::get('event', [EventController::class, 'index'])->name('admin.event');
+    Route::post('event', [EventController::class, 'store'])->name('admin.event.store');
+    Route::get('event/edit/{id}', [EventController::class, 'edit'])->name('admin.event.edit');
+    Route::put('event/{id}', [EventController::class, 'update'])->name('admin.event.update');
+    Route::delete('event/{id}', [EventController::class, 'destroy'])->name('admin.event.destroy');
 
+    //KUESIONER
+    Route::get('kuesioner/{id_event}', [KuesionerController::class,'index'])->name('admin.kuesioner');
+    Route::post('kuesioner/{id_event}', [KuesionerController::class, 'store'])->name('admin.kuesioner.store');
+    Route::delete('kuesioner/delete/{id}', [KuesionerController::class, 'destroy'])->name('admin.kuesioner.destroy');
     // === EVENT HOLDER ===
     Route::middleware('role:eventholder')->group(function () {
         Route::get('/eprofile', [EdashboardController::class, 'profile'])->name('eventholder.eprofile');
@@ -61,6 +71,14 @@ Route::middleware('auth')->group(function () {
     // === PESERTA ===
     Route::get('/ppassword', [DashboardController::class, 'profile'])->name('peserta.profile');
     Route::get('/dashboard', [DashboardController::class, 'showForm'])->name('peserta.dashboard');
+    Route::get('/profile', [DashboardController::class, 'profile'])->name('peserta.profile');
     Route::get('/event-peserta', [DashboardController::class, 'event'])->name('peserta.event');
-    Route::get('/kuisioner-peserta', [DashboardController::class, 'kuisioner'])->name('peserta.kuisioner');
+    Route::get('/event/{id}', [DashboardController::class, 'show'])->name('peserta.detailevent');
+    // Route::get('/kuesioner-peserta', [DashboardController::class, 'kuesioner'])->name('peserta.kuesioner');
+    Route::post('/kuesioner-peserta/{id_event}', [DashboardController::class,'storeJawaban'])->name('peserta.kuesioner.store');
+    Route::get('/kuesioner-peserta/{id_event}', [DashboardController::class, 'kuesioner'])->name('peserta.kuesioner');
+
+//HISTORY
+Route::get('/history', [DashboardController::class, 'history'])->name('peserta.history');
+
 });
