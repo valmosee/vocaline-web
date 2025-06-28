@@ -25,7 +25,7 @@
 
              <!-- Tombol Ajukan diri -->
              <div class="mt-6">
-                <a href="{{ route('peserta.kuesioner', ['id_event' => $event->id]) }}"
+                <a href="{{ route('peserta.ajukan', ['id_event' => $event->id]) }}"
                 class="inline-block bg-yellow-400 hover:bg-yellow-500 text-black text-sm font-semibold px-4 py-2 rounded shadow transition">
                     Ajukan Diri
                 </a>

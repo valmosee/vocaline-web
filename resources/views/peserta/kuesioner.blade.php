@@ -8,7 +8,7 @@
             <form action="{{ route('peserta.kuesioner.store', ['id_event' => $id_event]) }}" method="POST" enctype="multipart/form-data"
                 class="space-y-6">
                 @csrf
-                <input type="hidden" name="id_event" value="{{ $id_event }}">
+              <input type="hidden" name="id_join" value="{{ $id_join }}">  
 
                 @forelse ($kuesioners as $row)
                     <div class="mb-4">
@@ -24,6 +24,18 @@
                 @empty
                     <p class="text-red-500">Tidak ada kuesioner untuk event ini</p>
                 @endforelse
+
+                @if ($errors->any())
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
+        <strong>Terjadi kesalahan:</strong>
+        <ul class="list-disc ml-4">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 
                 <div class="mt-6 text-center">
                     <button type="submit"

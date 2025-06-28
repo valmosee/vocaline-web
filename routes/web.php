@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     EdashboardController,
     DashboardController,
     EventController,
+    KuesionerController,
     UserController
 };
 
@@ -77,7 +78,11 @@ Route::middleware('auth')->group(function () {
     // Route::get('/kuesioner-peserta', [DashboardController::class, 'kuesioner'])->name('peserta.kuesioner');
     Route::post('/kuesioner-peserta/{id_event}', [DashboardController::class,'storeJawaban'])->name('peserta.kuesioner.store');
     Route::get('/kuesioner-peserta/{id_event}', [DashboardController::class, 'kuesioner'])->name('peserta.kuesioner');
+    Route::get('/ajukan-diri/{id_event}', [DashboardController::class, 'ajukanDiri'])->name('peserta.ajukan');
 
+   
+
+   
 //HISTORY
 Route::get('/history', [DashboardController::class, 'history'])->name('peserta.history');
 

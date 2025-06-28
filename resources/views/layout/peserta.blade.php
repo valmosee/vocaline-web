@@ -45,7 +45,9 @@
 
       <a href="{{ route('peserta.dashboard') }}" class="nav-item py-2 px-4 rounded hover:bg-[#BDBDBD] cursor-pointer block">Dashboard</a>
       <a href="{{ route('peserta.event') }}" class="nav-item py-2 px-4 rounded hover:bg-[#BDBDBD] cursor-pointer block">Event</a>
-      <a href="{{ route('peserta.kuisioner') }}" class="nav-item py-2 px-4 rounded hover:bg-[#BDBDBD] cursor-pointer block">Kuisioner</a>
+      @isset($id_event)
+      <a href="{{ route('peserta.kuesioner', $id_event )}}" class="nav-item py-2 px-4 rounded hover:bg-[#BDBDBD] cursor-pointer block">Kuisioner</a>
+      @endisset
         <!-- Tombol logout -->
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
           @csrf

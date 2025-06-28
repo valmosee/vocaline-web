@@ -50,4 +50,8 @@ class AdashboardController extends Controller
 
         return view('admin.adashboard', compact('pesertas', 'anggotaCount', 'eventCount', 'user'));
     }
+
+    public function manajemenKuesioner(){
+        return view('admin.kuesioner');
+    }
 }
