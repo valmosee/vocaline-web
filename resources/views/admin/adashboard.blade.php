@@ -82,21 +82,17 @@
                 </tr>
               </thead>
               <tbody>
+                @forelse($latestEvents as $event)
                 <tr class="hover:bg-gray-50">
-                  <td class="px-4 py-2">Dies Natalis...</td>
-                  <td class="px-4 py-2">28-05-2025</td>
-                  <td class="px-4 py-2">5</td>
+                  <td class="px-4 py-2">{{ $event->name }}</td>
+                  <td class="px-4 py-2">{{ \Carbon\Carbon::parse($event->date)->format('d-m-Y') }}</td>
+                  <td class="px-4 py-2">{{ $event->total_penyanyi }}</td>
                 </tr>
-                <tr class="hover:bg-gray-50">
-                  <td class="px-4 py-2">Phygital</td>
-                  <td class="px-4 py-2">16-05-2025</td>
-                  <td class="px-4 py-2">1</td>
-                </tr>
-                <tr class="hover:bg-gray-50">
-                  <td class="px-4 py-2">Epiclar: The...</td>
-                  <td class="px-4 py-2">25-04-2025</td>
-                  <td class="px-4 py-2">3</td>
-                </tr>
+                @empty
+                <tr>                 
+                <td colspan="3" class="text-center py-4 text-gray-500">Belum ada event.</td>
+              </tr>
+              @endforelse
               </tbody>
             </table>
           </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\JoinEvent;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,9 +17,11 @@ class AdashboardController extends Controller
                         ->get(['nama', 'nrp', 'angkatan']);
 
         $anggotaCount = User::where('role', 'peserta')->count();
-        $eventCount = 12; // Ganti dengan logika hitung event jika ada
+        $eventCount = Event::count(); 
 
-        return view('admin.adashboard', compact('pesertas', 'anggotaCount', 'eventCount'));
+        $latestEvents = Event::latest()->take(4)->get(); 
+
+        return view('admin.adashboard', compact('pesertas', 'anggotaCount', 'eventCount', 'latestEvents'));
     }
 
     public function manajemenAkun()
