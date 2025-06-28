@@ -55,6 +55,10 @@
                             <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Apakah Anda yakin ingin menghapus?')">
                                 <i class="fas fa-trash"></i> Hapus
                             </button>
+                            <a href="{{ route('admin.approval', $event->id) }}" class="text-green-600 hover:text-green-900 mr-3">
+                                <i class="fas fa-user-check"></i> Kandidat
+                            </a>
+                            
                         </form>
                         <a> </a>
                         <a href="{{ route('admin.kuesioner', $event->id) }}" class="text-yellow-600 hover:text-yellow-900 mr-3">

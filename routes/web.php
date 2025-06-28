@@ -36,6 +36,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/aprofile', [AdashboardController::class, 'profile'])->name('admin.aprofile');
     Route::put('/aprofile', [AdashboardController::class, 'updateProfile'])->name('admin.profile.update');
     Route::get('adash', [AdashboardController::class, 'showForm'])->name('admin.dashboard');
+  #  Route::get('/admin/approval/{id_event}', [AdashboardController::class, 'approvalList'])->name('admin.approval.list');
+    Route::post('/admin/approval/{id_join}/approve', [AdashboardController::class, 'approve'])->name('admin.approval.approve');
+    Route::post('/admin/approval/{id_join}/reject', [AdashboardController::class, 'reject'])->name('admin.approval.reject');
+    Route::get('/admin/approval/{id_event}', [AdashboardController::class, 'approvalList'])->name('admin.approval');
+
 
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/makun', [UserController::class, 'index'])->name('makun');
