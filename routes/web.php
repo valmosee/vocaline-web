@@ -85,7 +85,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/kuesioner-peserta/{id_event}', [DashboardController::class, 'kuesioner'])->name('peserta.kuesioner');
     Route::get('/ajukan-diri/{id_event}', [DashboardController::class, 'ajukanDiri'])->name('peserta.ajukan');
 
-   
+    // === LAPORAN ===
+    Route::get('/admin/event/report', [EventController::class, 'report'])->name('admin.event.report');
 
    
 //HISTORY

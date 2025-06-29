@@ -90,4 +90,36 @@ class EventController extends Controller
         return redirect()->route('admin.event')
             ->with('success', 'Event berhasil dihapus!');
     }
+
+    // laporan event
+   public function report(Request $request)
+{
+    $query = Event::query();
+
+    if ($request->filled('status')) {
+        $query->whereRaw('LOWER(status) = ?', [strtolower($request->status)]);
+    }
+
+    if ($request->filled('city')) {
+        $query->whereRaw('LOWER(city) LIKE ?', ['%' . strtolower($request->city) . '%']);
+    }
+
+    if ($request->filled('date_start') && $request->filled('date_end')) {
+        $query->whereBetween('date', [$request->date_start, $request->date_end]);
+    }
+
+    if ($request->filled('keyword')) {
+        $keyword = strtolower($request->keyword);
+        $query->where(function ($q) use ($keyword) {
+            $q->whereRaw('LOWER(name) LIKE ?', ['%' . $keyword . '%'])
+              ->orWhereRaw('LOWER(location) LIKE ?', ['%' . $keyword . '%'])
+              ->orWhereRaw('LOWER(contact_person) LIKE ?', ['%' . $keyword . '%']);
+        });
+    }
+
+    $events = $query->get();
+
+    return view('admin.event-report', compact('events'));
+}
+
 }
