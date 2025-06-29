@@ -1,42 +1,39 @@
 @extends('layout.admin')
 
 @section('content')
-<div class="container mx-auto px-4 py-6">
-    <!-- Header dan Tombol Export -->
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">MANAJEMEN EVENT</h1>
-        <div>
-            {{-- <a href="#" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md inline-flex items-center">
-                <i class="fas fa-file-pdf mr-2"></i> EXPORT PDF
-            </a> --}}
+<div class="p-6 space-y-6">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-gray-800">📅 Manajemen Event</h1>
+        <div class="flex gap-3">
+            <button class="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow transition">
+                <i class="fas fa-file-pdf"></i> Export PDF
+            </button>
         </div>
     </div>
 
-    <!-- Tabel Daftar Event -->
-    <div class="bg-white rounded-lg shadow overflow-hidden mb-8">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
+    <!-- Table -->
+    <div class="bg-white shadow-lg rounded-xl overflow-x-auto border">
+        <table class="min-w-full text-sm text-left text-gray-700">
+            <thead class="bg-gray-100 text-xs uppercase text-gray-600">
                 <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Event</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lokasi</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Alamat</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jam Mulai</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
-
-
+                    <th class="px-6 py-3">Nama Event</th>
+                    <th class="px-6 py-3">Tanggal</th>
+                    <th class="px-6 py-3">Lokasi</th>
+                    <th class="px-6 py-3">Jam Mulai</th>
+                    <th class="px-6 py-3">Status</th>
+                    <th class="px-6 py-3">Aksi</th>
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                @forelse($events as $event)
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ $event->name }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ \Carbon\Carbon::parse($event->date)->format('d/m/Y') }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ $event->location }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ $event->address }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ $event->jam_mulai }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
+            <tbody class="divide-y">
+                @foreach($events as $event)
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 font-medium">{{ $event->name }}</td>
+                    <td class="px-6 py-4">{{ \Carbon\Carbon::parse($event->date)->format('d/m/Y') }}</td>
+                    <td class="px-6 py-4">{{ $event->location }}</td>
+                    <td class="px-6 py-4">{{ $event->jam_mulai }}</td>
+                    <td class="px-6 py-4">
                         <span class="px-2 py-1 text-xs rounded-full
                             @if($event->status == 'onproses') bg-yellow-100 text-yellow-800
                             @elseif($event->status == 'selesai') bg-green-100 text-green-800
@@ -45,85 +42,95 @@
                         </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        @if($event->status !== 'dibatalkan')
-                        <a href="{{ route('admin.event.edit', $event->id) }}" class="text-blue-600 hover:text-blue-900 mr-3">
-                            <i class="fas fa-edit"></i> Edit
-                        </a>
-                        <form action="{{ route('admin.event.destroy', $event->id) }}" method="POST" class="inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Apakah Anda yakin ingin menghapus?')">
-                                <i class="fas fa-trash"></i> Hapus
-                            </button>
-                            <a href="{{ route('admin.approval', $event->id) }}" class="text-green-600 hover:text-green-900 mr-3">
-                                <i class="fas fa-user-check"></i> Kandidat
+                        <div class="flex flex-wrap gap-2">
+                            @if($event->status !== 'dibatalkan')
+                            <a href="{{ route('admin.event.edit', $event->id) }}" 
+                               class="text-blue-600 hover:underline inline-flex items-center">
+                                <i class="fas fa-edit mr-1"></i> Edit
                             </a>
-                            
-                        </form>
-                        <a> </a>
-                        <a href="{{ route('admin.kuesioner', $event->id) }}" class="text-yellow-600 hover:text-yellow-900 mr-3">
-                            <i class="fas fa-question"></i> Kuesioner
-                        </a>
-                        @else
-                        <span class="text-gray-400 italic">Tidak tersedia</span>
-                        @endif
+                            <form action="{{ route('admin.event.destroy', $event->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" 
+                                        class="text-red-600 hover:underline inline-flex items-center"
+                                        onclick="return confirm('Apakah Anda yakin ingin menghapus?')">
+                                    <i class="fas fa-trash mr-1"></i> Hapus
+                                </button>
+                            </form>
+                            <a href="{{ route('admin.approval', $event->id) }}" 
+                               class="text-green-600 hover:underline inline-flex items-center">
+                                <i class="fas fa-user-check mr-1"></i> Kandidat
+                            </a>
+                            <a href="{{ route('admin.kuesioner', $event->id) }}" 
+                               class="text-yellow-600 hover:underline inline-flex items-center">
+                                <i class="fas fa-question mr-1"></i> Kuesioner
+                            </a>
+                            @else
+                            <span class="text-gray-400 italic">Tidak tersedia</span>
+                            @endif
+                        </div>
                     </td>
                 </tr>
-                @empty
-                <tr>
-                    <td colspan="5" class="px-6 py-4 text-center text-gray-500">Tidak ada data event</td>
-                </tr>
-                @endforelse
+                @endforeach
             </tbody>
         </table>
     </div>
 
     <!-- Pagination -->
-    @if($events->hasPages())
-    <div class="mt-4">
-        {{ $events->links() }}
+    <div class="flex justify-between items-center text-sm text-gray-600">
+        <div>
+            Menampilkan {{ $events->firstItem() }} – {{ $events->lastItem() }} dari {{ $events->total() }} event
+        </div>
+        <div>
+            {{ $events->links('vendor.pagination.custom-tailwind') }}
+        </div>
     </div>
-    @endif
 
-    <!-- Form Tambah Event -->
-    <div class="bg-white rounded-lg shadow p-6 mt-8">
-        <h2 class="text-xl font-semibold mb-4 text-gray-800">TAMBAH EVENT BARU</h2>
-        <form action="{{ route('admin.event.store') }}" method="POST" enctype="multipart/form-data">
+    <!-- Form Tambah/Edit Event -->
+    <div class="bg-white p-6 shadow-md rounded-lg">
+        <h2 class="text-xl font-semibold mb-4">➕ Tambah Event Baru</h2>
+        
+        <form action="{{ route('admin.event.store') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             @csrf
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama Event*</label>
-                    <input type="text" id="name" name="name" required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('name')
-                        <div class="alert alert-danger">{{ $message }} </div>
-                        @enderror
-                </div>
-                <div>
-                    <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Event*</label>
-                    <input type="date" id="date" name="date" required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('date')
-                        <div class="alert alert-danger">{{ $message }} </div>
-                        @enderror
-                </div>
-                <div>
-                    <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Lokasi*</label>
-                    <input type="text" id="location" name="location" required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('location')
-                        <div class="alert alert-danger">{{ $message }} </div>
-                        @enderror
-                </div>
-                <div>
-                    <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat*</label>
-                    <input type="text" id="alamat" name="address" required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        @error('address')
-                        <div class="alert alert-danger">{{ $message }} </div>
-                        @enderror
-                </div>
-                <div>
+            
+            <!-- Field Input -->
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama Event*</label>
+                <input type="text" id="name" name="name" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                @error('name')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+            
+            <div>
+                <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Event*</label>
+                <input type="date" id="date" name="date" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                @error('date')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+            
+            <div>
+                <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Lokasi*</label>
+                <input type="text" id="location" name="location" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                @error('location')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+            
+            <div>
+                <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Alamat*</label>
+                <input type="text" id="address" name="address" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                @error('address')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div>
                     <label for="kota" class="block text-sm font-medium text-gray-700 mb-1">Kota</label>
                     <input type="text" id="kota" name="city" required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
@@ -192,13 +199,16 @@
                         @enderror
                 </div>
             </div>
-            <div class="mt-6">
+            
+            <!-- Submit -->
+            <div class="col-span-full flex justify-end">
                 <button type="submit"
-                    class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    <i class="fas fa-save mr-2"></i> Simpan Event
+                    class="px-5 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition">
+                    Simpan Event
                 </button>
             </div>
         </form>
     </div>
+
 </div>
 @endsection

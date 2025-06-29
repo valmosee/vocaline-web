@@ -62,11 +62,11 @@ class AdashboardController extends Controller
     public function approvalList($id_event)
 {
     // Ambil semua peserta untuk event ini
-    $peserta = JoinEvent::with('user')
+    $peserta = JoinEvent::with('user', 'jawaban.kuesioner')
                 ->where('id_event', $id_event)
                 ->get()
                 ->map(function ($item) {
-                    $item->sudahIsi = $item->jawaban()->exists(); // cek sudah isi kuesioner atau belum
+                    $item->sudahIsi = $item->jawaban->isNotEmpty(); 
                     return $item;
                 });
 

@@ -94,6 +94,7 @@
       <div class="bg-green-100 border border-green-400 text-green-800 px-6 py-4 rounded-lg shadow transition-all duration-300">
         <strong class="block font-semibold mb-1">✅ Sukses!</strong>
         <span>{{ session('success') }}</span>
+        <p>Silahkan ditunggu untuk hasil keputusan penerimaan sebagai pengisi acara. 
       </div>
       @endif
 
