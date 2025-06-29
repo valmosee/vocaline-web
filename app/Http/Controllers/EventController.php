@@ -60,20 +60,26 @@ class EventController extends Controller
             'name' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'date' => 'required|date',
-            'status' => 'required|in:onproses,selesai,dibatalkan',
             'address' => 'required|string|max:255',
             'city' => 'required',
             'jam_mulai' => 'required|date_format:H:i',
             'jam_selesai' => 'required|date_format:H:i',
             'contact_person' => 'required',
             'total_penyanyi' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'status' => 'required|in:onproses,selesai,dibatalkan'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'status' => 'required|in:onproses,selesai,dibatalkan',
         ]);
 
-        $event->update($validated);
+        $event->fill($validated);
 
-        return redirect()->route('events.index')
+         if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('events', 'public');
+            $event->image = $path;
+        }
+        
+        $event->save();
+
+        return redirect()->route('admin.event')
             ->with('success', 'Event berhasil diperbarui!');
     }
 

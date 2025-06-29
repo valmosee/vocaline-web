@@ -59,7 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::get('event', [EventController::class, 'index'])->name('admin.event');
     Route::post('event', [EventController::class, 'store'])->name('admin.event.store');
     Route::get('event/edit/{id}', [EventController::class, 'edit'])->name('admin.event.edit');
-    Route::put('event/{id}', [EventController::class, 'update'])->name('admin.event.update');
+    Route::put('event/{event}', [EventController::class, 'update'])->name('admin.event.update');
     Route::delete('event/{id}', [EventController::class, 'destroy'])->name('admin.event.destroy');
 
     //KUESIONER
