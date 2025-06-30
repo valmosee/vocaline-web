@@ -6,7 +6,7 @@
 @auth
     @if (Auth::user()->role !== 'peserta')
         <script>
-            window.location.href = "{{ route('home') }}";
+            window.location.href = "{{ route('register') }}";
         </script>
     @endif
 @else
