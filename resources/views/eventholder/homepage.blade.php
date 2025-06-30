@@ -8,6 +8,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    function confirmLogout() {
+        Swal.fire({
+            title: 'Yakin mau logout?',
+            text: "Kamu akan keluar dari sistem.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('logout-form').submit();
+            }
+        });
+    }
+  </script>
+
+
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -50,28 +72,40 @@
 </head>
 <body class="overflow-x-hidden">
 
-  <!-- HEADER -->
-  <header class="bg-[#0A0A23] text-white py-4 px-6 flex justify-between items-center">
-    <!-- profile -->
-    <a href="{{ route('eventholder.eprofile') }}" class="flex items-center mb-6">
-    <div class="bg-[#F7931E] text-white font-bold w-10 h-10 rounded-full flex items-center justify-center mr-3 hover:opacity-80 transition">
-        VG
+
+  <!-- Header -->
+  <header class="bg-[#0A0A23] text-white px-6 py-4">
+    <div class="flex justify-between items-center">
+      <!-- Kiri: Logo -->
+      <a href="{{ route('eventholder.eprofile') }}" class="flex items-center space-x-2">
+        <div class="bg-[#F7931E] text-white font-bold w-10 h-10 rounded-full flex items-center justify-center">VG</div>
+      </a>
+
+
+      <!-- Kanan: Menu + Logout -->
+      <div class="flex items-center space-x-6 text-sm font-medium">
+        <a href="#events" class="hover:text-yellow-400 transition">events</a>
+        <a href="#services" class="hover:text-yellow-400 transition">Services</a>
+        <a href="#bts" class="hover:text-yellow-400 transition">Behind the Scenes</a>
+        <a href="#contact" class="hover:text-yellow-400 transition">Contact</a>
+
+
+        <!-- Tombol Logout -->
+        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+          @csrf
+          <button type="button" onclick="confirmLogout()" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 flex items-center">
+            <i class="fa-solid fa-right-from-bracket mr-2"></i>Logout
+          </button>
+        </form>
+      </div>
     </div>
-    </a>
-  </div>
-  
-  <!-- Kanan: Nav Menu -->
-  <nav class="flex space-x-6 text-sm font-medium">
-    <a href="#events" class="hover:text-yellow-400 transition">Events</a>
-    <a href="#services" class="hover:text-yellow-400 transition">Services</a>
-    <a href="#bts" class="hover:text-yellow-400 transition">Behind the Scenes</a>
-    <a href="#contact" class="hover:text-yellow-400 transition">Contact</a>
-  </nav>
   </header>
 
-  <!-- Hero + Events -->
+
+  <!-- Hero + events -->
   <div class="relative" style="background-image: url('https://limelight-arts.com.au/wp-content/uploads/2023/02/Kings-Singers-1024x683.jpg'); background-size: cover; background-position: center;">
     <div class="absolute inset-0 bg-black opacity-60 pointer-events-none"></div>
+
 
     <!-- Hero Section -->
     <section class="relative min-h-screen flex flex-col justify-center items-center text-center px-6 z-10 text-white">
@@ -80,9 +114,10 @@
       <a href="#events" class="mt-10 px-8 py-3 bg-yellow-400 text-black font-semibold rounded-full hover:bg-yellow-300 hover:scale-105 transition-all duration-300 shadow-lg" data-aos="zoom-in" data-aos-delay="400">Discover Us</a>
     </section>
 
-    <!-- Events -->
+
+    <!-- events -->
     <section id="events" class="relative py-24 z-10">
-      <h2 class="text-4xl font-bold text-center gold-text mb-16" data-aos="fade-down">Events</h2>
+      <h2 class="text-4xl font-bold text-center gold-text mb-16" data-aos="fade-down">events</h2>
       <div class="swiper mySwiper px-6 max-w-7xl mx-auto" data-aos="fade-up">
         <div class="swiper-wrapper">
           <!-- Slides -->
@@ -92,11 +127,13 @@
             <p class="text-gray-300 mt-2 text-base">Celebration with epic performance & harmony vibes.</p>
           </article>
 
+
           <article class="swiper-slide bg-[#181d3a] p-6 rounded-xl shadow-xl text-white w-full max-w-md transition hover:scale-105 duration-300">
             <img src="https://th.bing.com/th/id/OIP.Fq5cWGLl1dzdcamxRpj0_wHaE7" alt="Phygital" class="rounded-lg mb-4 w-full h-64 object-cover" />
             <h3 class="text-2xl font-semibold gold-text truncate">Phygital</h3>
             <p class="text-gray-300 mt-2 text-base">Blending physical & digital stage experiences.</p>
           </article>
+
 
           <article class="swiper-slide bg-[#181d3a] p-6 rounded-xl shadow-xl text-white w-full max-w-md transition hover:scale-105 duration-300">
             <img src="https://burst.shopifycdn.com/photos/rock-band-on-stage_4460x4460.jpg" alt="Epiclair" class="rounded-lg mb-4 w-full h-64 object-cover" />
@@ -105,12 +142,14 @@
           </article>
         </div>
 
+
         <!-- Swiper Navigation -->
         <div class="swiper-button-next text-yellow-300"></div>
         <div class="swiper-button-prev text-yellow-300"></div>
       </div>
     </section>
   </div>
+
 
   <!-- Our Vibe -->
   <section class="py-24 bg-[#0c0f24] text-center">
@@ -119,6 +158,7 @@
       We grow together — beyond music. Every tone, pause, and harmony reflects trust, passion, and soul.
     </p>
   </section>
+
 
   <!-- Collaborations -->
   <section class="py-24 bg-[#0f132d] text-center">
@@ -129,6 +169,7 @@
       <div class="w-24 h-24 bg-yellow-400 rounded-full flex items-center justify-center text-black font-bold text-lg shadow-lg hover:scale-110 transition">BEM</div>
     </div>
   </section>
+
 
   <!-- Services + Behind the Scenes -->
   <section id="services" class="bg-shared py-24 px-6 md:px-12">
@@ -149,6 +190,7 @@
         </div>
         </div>
 
+
       <!-- Text -->
       <div class="text-left md:w-1/2" data-aos="fade-left">
         <h2 class="text-4xl font-bold mb-6">Our Services</h2>
@@ -157,156 +199,210 @@
       </div>
     </div>
 
+
     <!-- Behind the Scenes -->
     <section id="bts" class="py-24 px-6 md:px-12">
       <div class="relative max-w-5xl mx-auto text-center text-white z-10">
         <h2 class="text-5xl font-bold mb-8 gold-text">Behind the Scenes</h2>
         <div class="w-full aspect-video mb-8">
-          <iframe class="w-full h-full rounded-md" src="https://www.youtube.com/embed/jNQXAC9IVRw" title="Behind the Scenes" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe class="w-full h-full rounded-md" src="https://www.youtube.com/embed/vCawPX1bv3o" title="Behind the Scenes" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         <p class="text-lg leading-relaxed max-w-3xl mx-auto">Get an inside look at how our team collaborates, practices, and prepares each week. From warm-up sessions to studio takes, this is where the harmony begins — raw, real, and rhythmically driven.</p>
       </div>
     </section>
 
-    <!-- Add Event (Questionnaire Form) -->
-    <section id="add-event" class="py-24 px-6 md:px-12 text-white">
-    <div class="max-w-3xl mx-auto">
-        <h2 class="text-4xl font-bold text-center gold-text mb-10" data-aos="fade-down">Add Your Event</h2>
-        <form class="space-y-6 bg-[#181d3a] p-8 rounded-lg shadow-xl" data-aos="fade-up">
-        <div>
-            <label for="event-name" class="block mb-2 text-sm font-medium">Event Name</label>
-            <input type="text" id="event-name" name="event-name" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
-        </div>
+
+    <!-- Add events (Questionnaire Form) -->
+    <section id="add-events" class="py-24 px-6 md:px-12 text-white">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-4xl font-bold text-center gold-text mb-10" data-aos="fade-down">Add Your events</h2>
+
+
+        <form method="POST" action="{{ route('eventholder.events.store') }}" enctype="multipart/form-data" class="space-y-6 bg-[#181d3a] p-8 rounded-lg shadow-xl" data-aos="fade-up">
+          @csrf
+
 
         <div>
-            <label for="event-date" class="block mb-2 text-sm font-medium">Date</label>
-            <input type="date" id="event-date" name="event-date" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
+          <label for="name" class="block mb-2 text-sm font-medium">events Name</label>
+          <input type="text" id="name" name="name" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
         </div>
 
-        <!-- Jam Mulai -->
-        <div>
-          <label for="start-time" class="block mb-2 text-sm font-medium text-white">Starts from</label>
-          <input type="time" id="start-time" name="start-time" required
-            class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
-        </div>
-
-        <!-- Jam Selesai -->
-        <div>
-          <label for="end-time" class="block mb-2 text-sm font-medium text-white">Ends on</label>
-          <input type="time" id="end-time" name="end-time" required
-            class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
-        </div>
 
         <div>
-            <label for="event-account" class="block mb-2 text-sm font-medium">Account</label>
-              <input type="text" id="event-name" name="event-name" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
+          <label for="date" class="block mb-2 text-sm font-medium">Date</label>
+          <input type="date" id="date" name="date" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
         </div>
 
-        <div>
-            <label for="event-description" class="block mb-2 text-sm font-medium">Description</label>
-            <textarea id="event-description" name="event-description" rows="4" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"></textarea>
-        </div>
 
         <div>
-            <label for="event-pic" class="block mb-2 text-sm font-medium">PIC</label>
-              <input type="text" id="event-name" name="event-name" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
+          <label for="jam_mulai" class="block mb-2 text-sm font-medium">Starts from</label>
+          <input type="time" id="jam_mulai" name="jam_mulai" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
         </div>
 
-        <div>
-            <label for="event-contact" class="block mb-2 text-sm font-medium">Contact Person</label>
-              <input type="text" id="event-name" name="event-name" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
-        </div>
 
         <div>
-            <label for="event-duration" class="block mb-2 text-sm font-medium">Duration</label>
-              <input type="text" id="event-name" name="event-name" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
+          <label for="jam_selesai" class="block mb-2 text-sm font-medium">Ends on</label>
+          <input type="time" id="jam_selesai" name="jam_selesai" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
         </div>
 
-        <div>
-            <label for="event-song" class="block mb-2 text-sm font-medium">Song</label>
-            <textarea id="event-song" name="event-song" rows="4" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"></textarea>
-        </div>
 
         <div>
-            <label for="event-benefit" class="block mb-2 text-sm font-medium">Benefit</label>
-            <textarea id="event-benefit" name="event-benefit" rows="4" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"></textarea>
+          <label for="account" class="block mb-2 text-sm font-medium">Account</label>
+          <input type="text" id="account" name="account" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
         </div>
 
-        <div>
-            <label for="event-notes" class="block mb-2 text-sm font-medium">Extra Notes</label>
-            <textarea id="event-notes" name="event-notes" rows="4" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"></textarea>
-        </div>        
-        
-        <div>
-            <label for="event-singer" class="block mb-2 text-sm font-medium">Singer</label>
-            <select id="event-singer" name="event-singer" class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="more than 5">More than 5</option>
-            </select>
-        </div>
 
         <div>
-            <label for="event-type" class="block mb-2 text-sm font-medium">Event Type</label>
-            <select id="event-type" name="event-type" class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
+          <label for="keterangan" class="block mb-2 text-sm font-medium">Description</label>
+          <textarea id="keterangan" name="keterangan" rows="4" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"></textarea>
+        </div>
+
+
+        <div>
+          <label for="pic" class="block mb-2 text-sm font-medium">PIC</label>
+          <input type="text" id="pic" name="pic" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
+        </div>
+
+
+        <div>
+          <label for="contact_person" class="block mb-2 text-sm font-medium">Contact Person</label>
+          <input type="text" id="contact_person" name="contact_person" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
+        </div>
+
+
+        <div>
+          <label for="duration" class="block mb-2 text-sm font-medium">Duration (minutes)</label>
+          <input type="number" id="duration" name="duration" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
+        </div>
+
+
+        <div>
+          <label for="location" class="block mb-2 text-sm font-medium">Location</label>
+          <input type="text" id="location" name="location" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
+        </div>
+
+
+        <div>
+          <label for="address" class="block mb-2 text-sm font-medium">Address</label>
+          <input type="text" id="address" name="address" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
+        </div>
+
+
+        <div>
+          <label for="city" class="block mb-2 text-sm font-medium">City</label>
+          <input type="text" id="city" name="city" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
+        </div>
+
+
+        <div>
+          <label for="song" class="block mb-2 text-sm font-medium">Song</label>
+          <textarea id="song" name="song" rows="4" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"></textarea>
+        </div>
+
+
+        <div>
+          <label for="benefit" class="block mb-2 text-sm font-medium">Benefit</label>
+          <textarea id="benefit" name="benefit" rows="4" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"></textarea>
+        </div>
+
+
+        <div>
+          <label for="notes" class="block mb-2 text-sm font-medium">Extra Notes</label>
+          <textarea id="notes" name="notes" rows="4" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"></textarea>
+        </div>
+
+
+        <div>
+          <label for="total_penyanyi" class="block mb-2 text-sm font-medium">Total Penyanyi</label>
+          <input type="number" id="total_penyanyi" name="total_penyanyi" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
+        </div>
+
+
+        <div>
+          <label for="type" class="block mb-2 text-sm font-medium">events Type</label>
+          <select id="type" name="type" class="w-full px-4 py-2 rounded-md bg-[#0f132d] border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400">
             <option value="performance">Performance</option>
             <option value="workshop">Workshop</option>
             <option value="collaboration">Collaboration</option>
             <option value="other">Other</option>
-            </select>
+          </select>
         </div>
+
+
+        <div>
+          <label for="image" class="block mb-2 text-sm font-medium">events Image</label>
+          <input type="file" id="image" name="image" accept="image/*" required class="w-full px-4 py-2 rounded-md bg-[#0f132d] text-white file:bg-yellow-400 file:text-black file:border-none file:rounded file:px-4 file:py-2">
+        </div>
+
 
         <button type="submit" class="w-full bg-yellow-400 text-black font-semibold py-3 px-6 rounded-full hover:bg-yellow-300 hover:scale-105 transition-all duration-300 shadow-lg">
-            Submit Event
+          Submit events
         </button>
-        </form>
-    </div>
+       
+        @if (session('success'))
+          <script>
+            Swal.fire({
+              title: 'Berhasil!',
+              text: '{{ session("success") }}',
+              icon: 'success',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'OK',
+              timer: 3000
+            });
+          </script>
+        @endif
+
+
+       
+      </div>
+      </section>
     </section>
-  </section>
 
-    <!-- FOOTER -->
-    <footer id="contact" class="bg-black text-white py-12 text-center text-sm">
-    <div class="max-w-5xl mx-auto px-6 space-y-10">
 
-        <!-- Contact Us Info -->
-        <div>
-        <h3 class="text-2xl font-bold mb-6 text-yellow-400">Contact Us</h3>
-        <div class="flex flex-col md:flex-row justify-center items-center gap-8 text-base">
-            <!-- YouTube -->
-            <a href="https://www.youtube.com/@yourchannel" target="_blank" class="hover:text-yellow-400 transition flex items-center gap-2">
-            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19.6 3H4.4C3.6 3 3 3.6 3 4.4v15.2c0 .8.6 1.4 1.4 1.4h15.2c.8 0 1.4-.6 1.4-1.4V4.4c0-.8-.6-1.4-1.4-1.4zM10 16V8l6 4-6 4z"/></svg>
-            Vocal Group
-            </a>
+      <!-- FOOTER -->
+      <footer id="contact" class="bg-black text-white py-12 text-center text-sm">
+      <div class="max-w-5xl mx-auto px-6 space-y-10">
 
-            <!-- Instagram -->
-            <a href="https://www.instagram.com/yourprofile" target="_blank" class="hover:text-yellow-400 transition flex items-center gap-2">
-            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm6.5-.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM12 9c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3z"/></svg>
-            @vocalgroup.pcu
-            </a>
 
-            <!-- WA / Line -->
-            <div class="text-gray-300 text-sm leading-relaxed">
-            <div><strong>WhatsApp:</strong> +62 812-3456-7890</div>
-            <div><strong>LINE:</strong> @vocalgroup</div>
-            </div>
-        </div>
-        </div>
+          <!-- Contact Us Info -->
+          <div>
+          <h3 class="text-2xl font-bold mb-6 text-yellow-400">Contact Us</h3>
+          <div class="flex flex-col md:flex-row justify-center items-center gap-8 text-base">
+              <!-- YouTube -->
+              <a href="https://www.youtube.com/@yourchannel" target="_blank" class="hover:text-yellow-400 transition flex items-center gap-2">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19.6 3H4.4C3.6 3 3 3.6 3 4.4v15.2c0 .8.6 1.4 1.4 1.4h15.2c.8 0 1.4-.6 1.4-1.4V4.4c0-.8-.6-1.4-1.4-1.4zM10 16V8l6 4-6 4z"/></svg>
+              Vocal Group
+              </a>
 
-        <!-- Footer Nav -->
-        <div>
-        <p>&copy; 2025 Vocal Group. All rights reserved.</p>
-        <div class="mt-4 flex justify-center gap-6 text-gray-400">
-            <a href="#events" class="hover:text-yellow-400 transition">Events</a>
-            <a href="#services" class="hover:text-yellow-400 transition">Services</a>
-            <a href="#bts" class="hover:text-yellow-400 transition">Behind the Scenes</a>
-        </div>
-        </div>
 
-    </div>
-    </footer>
+              <!-- Instagram -->
+              <a href="https://www.instagram.com/yourprofile" target="_blank" class="hover:text-yellow-400 transition flex items-center gap-2">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm6.5-.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM12 9c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3z"/></svg>
+              @vocalgroup.pcu
+              </a>
+
+
+              <!-- WA / Line -->
+              <div class="text-gray-300 text-sm leading-relaxed">
+              <div><strong>WhatsApp:</strong> +62 812-3456-7890</div>
+              <div><strong>LINE:</strong> @vocalgroup</div>
+              </div>
+          </div>
+          </div>
+
+
+          <!-- Footer Nav -->
+          <div>
+          <p>&copy; 2025 Vocal Group. All rights reserved.</p>
+          <div class="mt-4 flex justify-center gap-6 text-gray-400">
+              <a href="#events" class="hover:text-yellow-400 transition">events</a>
+              <a href="#services" class="hover:text-yellow-400 transition">Services</a>
+              <a href="#bts" class="hover:text-yellow-400 transition">Behind the Scenes</a>
+          </div>
+          </div>
+      </div>
+      </footer>
+
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
@@ -334,3 +430,6 @@
   </script>
 </body>
 </html>
+
+
+

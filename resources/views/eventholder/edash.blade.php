@@ -163,13 +163,13 @@
       <div class="relative max-w-5xl mx-auto text-center text-white z-10">
         <h2 class="text-5xl font-bold mb-8 gold-text">Behind the Scenes</h2>
         <div class="w-full aspect-video mb-8">
-          <iframe class="w-full h-full rounded-md" src="https://www.youtube.com/embed/jNQXAC9IVRw" title="Behind the Scenes" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe class="w-full h-full rounded-md" src="https://www.youtube.com/embed/vCawPX1bv3o" title="Behind the Scenes" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         <p class="text-lg leading-relaxed max-w-3xl mx-auto">Get an inside look at how our team collaborates, practices, and prepares each week. From warm-up sessions to studio takes, this is where the harmony begins — raw, real, and rhythmically driven.</p>
       </div>
     </section>
 
-    <!-- Add Event (Questionnaire Form) -->
+    {{-- <!-- Add Event (Questionnaire Form) -->
     <section id="add-event" class="py-24 px-6 md:px-12 text-white">
     <div class="max-w-3xl mx-auto">
         <h2 class="text-4xl font-bold text-center gold-text mb-10" data-aos="fade-down">Work Together With Us</h2>
@@ -180,7 +180,7 @@
         </a>
         </div>
     </div>
-    </section>
+    </section> --}}
 </section>
 
     <!-- FOOTER -->
@@ -250,3 +250,4 @@
   </script>
 </body>
 </html>
+

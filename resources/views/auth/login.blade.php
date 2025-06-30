@@ -17,7 +17,7 @@
                 <x-select-input onchange="bentukemail()" name="jenisemail" id="jenisemail" required class="border-gray-300 rounded-md shadow-sm">
                     <option value="@staff.vg.ac.id">@staff.vg.ac.id</option>
                     <option value="@member.vg.ac.id">@member.vg.ac.id</option>
-                    <option value="@event.vg.ac.id">@event.vg.ac.id</option>
+
                 </x-select-input>
             </div>
             <x-text-input id="email" class="hidden" type="email" name="email" :value="old('email')" required autocomplete="username" />
@@ -59,7 +59,6 @@
             <ul class="list-disc list-inside space-y-1">
                 <li>Fungsionaris: gunakan email <code>@staff.vg.ac.id</code></li>
                 <li>Peserta: gunakan email <code>@member.vg.ac.id</code></li>
-                <li>Eventholder: gunakan email <code>@event.vg.ac.id</code></li>
             </ul>
         </div>
     </form>
