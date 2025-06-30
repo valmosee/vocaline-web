@@ -1,5 +1,25 @@
 @extends('layout.admin')
 
+
+<script>
+  function confirmDelete(formId) {
+    Swal.fire({
+      title: 'Yakin ingin menghapus?',
+      text: "File yang dihapus tidak bisa dikembalikan.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#e3342f',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Hapus',
+      cancelButtonText: 'Batal'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.getElementById(formId).submit();
+      }
+    });
+  }
+</script>
+
 @section('content')
 <div class="p-6 space-y-6">
 
@@ -7,9 +27,6 @@
     <div class="flex justify-between items-center">
         <h1 class="text-3xl font-bold text-gray-800">📅 Manajemen Event</h1>
         <div class="flex gap-3">
-            <button class="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow transition">
-                <i class="fas fa-file-pdf"></i> Export PDF
-            </button>
         </div>
     </div>
 
@@ -48,15 +65,12 @@
                                class="text-blue-600 hover:underline inline-flex items-center">
                                 <i class="fas fa-edit mr-1"></i> Edit
                             </a>
-                            <form action="{{ route('admin.event.destroy', $event->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" 
-                                        class="text-red-600 hover:underline inline-flex items-center"
-                                        onclick="return confirm('Apakah Anda yakin ingin menghapus?')">
+
+                            <button onclick="confirmDelete('delete-form-{{ $event->id }}')" 
+                                    class="text-red-600 hover:underline inline-flex items-center">
                                     <i class="fas fa-trash mr-1"></i> Hapus
-                                </button>
-                            </form>
+                            </button>
+                         
                             <a href="{{ route('admin.approval', $event->id) }}" 
                                class="text-green-600 hover:underline inline-flex items-center">
                                 <i class="fas fa-user-check mr-1"></i> Kandidat

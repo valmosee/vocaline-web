@@ -56,7 +56,6 @@
                         <x-select-input onchange="bentukemail()" name="jenisemail" id="jenisemail" required>
                             <option value="@staff.vg.ac.id">@staff.vg.ac.id</option>
                             <option value="@member.vg.ac.id">@member.vg.ac.id</option>
-                            <option value="@event.vg.ac.id">@event.vg.ac.id</option>
                         </x-select-input>
                     </div>
                     <x-text-input id="email" class="hidden" type="email" name="email"
