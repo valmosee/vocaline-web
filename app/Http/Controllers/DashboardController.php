@@ -123,6 +123,15 @@ class DashboardController extends Controller
     
 }
 
+public function history(){
+    $userId = Auth::id(); // Ganti ini jika tidak pakai Auth
+    $joinedEvents = JoinEvent::with('event')
+                    ->where('id_user', $userId)
+                    ->orderByDesc('tanggal')
+                    ->get();
 
+    return view('peserta.history', compact('joinedEvents'));
+
+}
 
 }

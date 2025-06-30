@@ -33,36 +33,36 @@
         <table class="w-full text-sm text-gray-700">
           <thead class="text-left bg-gray-100 rounded">
             <tr>
-              <th class="py-2 px-2">Nama</th>
               <th class="py-2 px-2">Acara</th>
               <th class="py-2 px-2">Status</th>
             </tr>
           </thead>
           <tbody>
+            @php
+              $user = auth()->user();
+              $joinEvents = \App\Models\JoinEvent::with('event')
+                  ->where('id_user', $user->id)
+                  ->orderBy('id', 'desc')
+                  ->get();
+            @endphp
+            @foreach($joinEvents as $join)
             <tr class="border-b">
-              <td class="py-2 px-2">Lana Del Rey</td>
-              <td class="py-2 px-2">Dies Natalis</td>
+              <td class="py-2 px-2">{{ $join->event->name ?? '-' }}</td>
               <td class="py-2 px-2">
-                <button class="bg-green-200 hover:bg-green-300 text-green-800 font-medium px-3 py-1 rounded-full">Accept</button>
+                @if($join->status === 'approved')
+                  <span class="bg-green-200 text-green-800 font-medium px-3 py-1 rounded-full">Approved</span>
+                @elseif($join->status === 'rejected')
+                  <span class="bg-red-200 text-red-800 font-medium px-3 py-1 rounded-full">Rejected</span>
+                @else
+                  <span class="bg-yellow-200 text-yellow-800 font-medium px-3 py-1 rounded-full">Pending</span>
+                @endif
               </td>
             </tr>
-            <tr class="border-b">
-              <td class="py-2 px-2">Sabrina C</td>
-              <td class="py-2 px-2">Dies Natalis</td>
-              <td class="py-2 px-2">
-                <button class="bg-red-200 hover:bg-red-300 text-red-800 font-medium px-3 py-1 rounded-full">Reject</button>
-              </td>
-            </tr>
-            <tr>
-              <td class="py-2 px-2">Olivia Rodrigo</td>
-              <td class="py-2 px-2">Phygital</td>
-              <td class="py-2 px-2">
-                <button class="bg-green-200 hover:bg-green-300 text-green-800 font-medium px-3 py-1 rounded-full">Accept</button>
-              </td>
-            </tr>
+            @endforeach
           </tbody>
         </table>
       </div>
+        
 
       <!-- Status Partisipasi -->
       <div class="bg-white border border-gray-200 rounded-2xl shadow-lg p-6 transition duration-300 hover:shadow-xl">

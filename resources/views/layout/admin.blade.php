@@ -91,10 +91,6 @@
           <span>Event</span>
         </a>
         
-        <a href="{{ route('admin.event') }}" class="sidebar-item flex items-center px-4 py-3 rounded-xl hover:bg-indigo-50/80">
-          <i class="fa-solid fa-check-circle w-5 mr-3 text-purple-500"></i>
-          <span>Approval Kandidat</span>
-        </a>
 
          <a href="{{ route('admin.event.report') }} "class="sidebar-item flex items-center px-4 py-3 rounded-xl hover:bg-indigo-50/80 cursor-pointer">
           <i class="fa-solid fa-file-lines w-5 mr-3 text-amber-500"></i>
